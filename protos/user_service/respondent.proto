@@ -1,0 +1,17 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/user_service";
+
+message Respondent {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string sber_id = 5;
+}
+
+message GetAllRespondentResponse {
+    repeated Respondent respondents = 1;
+    int32 count = 2;
+}

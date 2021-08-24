@@ -1,0 +1,25 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/user_service";
+
+import "respondent.proto";
+import "company.proto";
+import "google/protobuf/empty.proto";
+
+service RespondentService {
+    rpc Create(Respondent) returns (CreatedResponse) {}
+    rpc Update(Respondent) returns (CreatedResponse) {}
+    rpc Get(GetRequest) returns (Respondent) {}
+    rpc GetAll(GetAllRespondentRequest) returns (GetAllRespondentResponse) {}
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {}
+}
+
+
+message GetAllRespondentRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+    string name = 3;
+    string email = 4;
+    string phone = 5;
+}

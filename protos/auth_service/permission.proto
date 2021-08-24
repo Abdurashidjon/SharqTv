@@ -1,0 +1,43 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/auth_service";
+
+message PermissionModel {
+    string parent_id = 1;
+    string name = 2;
+    string id = 3;
+}
+
+message NestedPermissionModel {
+    string parent_id = 1;
+    string name = 2;
+    string id = 3;
+    repeated NestedPermissionModel childs = 4;
+}
+
+message PermissionScopeModel {
+    string permission_id = 1;
+    string method = 2;
+    string url = 3;
+}
+
+message Scope {
+    string method = 1;
+    string url = 2;
+}
+
+message CreatePermissionModel {
+    string id = 1;
+    string parent_id = 2;
+    string name = 3;
+    repeated Scope scopes = 4;
+}
+
+message PermissionFullModel {
+    string id = 1;
+    string parent_id = 2;
+    string name = 3;
+    repeated PermissionScopeModel scopes = 4;
+}
+

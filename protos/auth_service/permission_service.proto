@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/auth_service";
+
+import "permission.proto";
+import "auth.proto";
+import "google/protobuf/empty.proto";
+
+service PermissionService {
+    rpc CreatePermission(CreatePermissionModel) returns (CreatedResponse) {}
+    rpc GetNestedPermission(GetRequest) returns (NestedPermissionModel) {}
+    rpc UpdatePermission(PermissionModel) returns (google.protobuf.Empty) {}
+    rpc DeletePermission(DeleteRequest) returns (google.protobuf.Empty) {}
+    rpc GetFullPermissionByID(GetRequest) returns (PermissionFullModel) {}
+    rpc AddPermissionScope(PermissionScopeModel) returns (google.protobuf.Empty) {}
+    rpc RemovePermissionScope(PermissionScopeModel) returns (google.protobuf.Empty) {}
+}

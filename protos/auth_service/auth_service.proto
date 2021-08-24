@@ -1,0 +1,13 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/auth_service";
+
+import "auth.proto";
+import "google/protobuf/empty.proto";
+
+service AuthService {
+    rpc HasAccess(AccessModel) returns (HasAccessModel) {}
+    rpc RefreshToken(RefreshTokenModel) returns (TokenModel) {}
+    rpc Logout(LogoutModel) returns (google.protobuf.Empty) {}
+}

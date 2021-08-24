@@ -1,0 +1,19 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/auth_service";
+
+import "role.proto";
+import "auth.proto";
+import "scope.proto";
+import "google/protobuf/empty.proto";
+
+service RoleService {
+    rpc CreateRole(RoleModel) returns (CreatedResponse) {}
+    rpc UpdateRole(RoleModel) returns (CreatedResponse) {}
+    rpc DeleteRole(DeleteRequest) returns (google.protobuf.Empty) {}
+    rpc GetFullRoleByID(GetRequest) returns (RoleFullModel) {}
+    rpc AddRolePermission(RolePermissionModel) returns (google.protobuf.Empty) {}
+    rpc RemoveRolePermission(RolePermissionModel) returns (google.protobuf.Empty) {}
+    rpc GetScopeList(ScopeQueryParamModel) returns (ScopeListModel) {}
+}

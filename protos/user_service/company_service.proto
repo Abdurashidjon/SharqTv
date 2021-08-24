@@ -1,0 +1,22 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/user_service";
+
+import "company.proto";
+import "google/protobuf/empty.proto";
+
+service CompanyService {
+    rpc Create(Company) returns (CreatedResponse) {}
+    rpc Update(Company) returns (CreatedResponse) {}
+    rpc Get(GetRequest) returns (Company) {}
+    rpc GetAll(GetAllCompanyRequest) returns (GetAllCompanyResponse) {}
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {}
+}
+
+message GetAllCompanyRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+    string name = 3;
+    string inn = 4;
+}
