@@ -10,7 +10,7 @@ COPY . ./
 # installing depends and build
 RUN export CGO_ENABLED=0 && \
     export GOOS=linux && \
-    go mod vendor \
+    go mod vendor && \
     make build && \
     mv ./bin/ur_go_user_service /
 
