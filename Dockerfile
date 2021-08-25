@@ -1,8 +1,8 @@
 FROM golang:1.16 as builder
 
 #
-RUN mkdir -p $GOPATH/src/bitbucket.org/udevs/ur_go_user_service
-WORKDIR $GOPATH/src/bitbucket.org/udevs/ur_go_user_service
+RUN mkdir -p $GOPATH/src/gitlab.udevs.io/urecruit/ur_go_user_service
+WORKDIR $GOPATH/src/gitlab.udevs.io/urecruit/ur_go_user_service
 
 # Copy the local package files to the container's workspace.
 COPY . ./
@@ -10,6 +10,7 @@ COPY . ./
 # installing depends and build
 RUN export CGO_ENABLED=0 && \
     export GOOS=linux && \
+    go mod vendor \
     make build && \
     mv ./bin/ur_go_user_service /
 
