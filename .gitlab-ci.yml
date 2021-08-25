@@ -21,8 +21,8 @@ build-image:
   only:
     - master
 
-migaret-prod:
-  stage: migarte
+migrate-prod:
+  stage: migrate
   before_script:
     - apk add wget && wget https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz
     - tar -xvf migrate.linux-amd64.tar.gz && mv migrate.linux-amd64 migrate && chmod +x migrate
