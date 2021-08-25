@@ -4,15 +4,14 @@ package genproto;
 option go_package="genproto/user_service";
 
 import "respondent.proto";
-import "company.proto";
 import "google/protobuf/empty.proto";
 
 service RespondentService {
-    rpc Create(Respondent) returns (CreatedResponse) {}
-    rpc Update(Respondent) returns (CreatedResponse) {}
-    rpc Get(GetRequest) returns (Respondent) {}
+    rpc Create(Respondent) returns (RespondentId) {}
+    rpc Update(Respondent) returns (RespondentId) {}
+    rpc Get(RespondentId) returns (Respondent) {}
     rpc GetAll(GetAllRespondentRequest) returns (GetAllRespondentResponse) {}
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {}
+    rpc Delete(RespondentId) returns (google.protobuf.Empty) {}
 }
 
 

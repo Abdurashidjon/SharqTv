@@ -12,15 +12,7 @@ message Company {
     string phone = 6;
 }
 
-message CreatedResponse {
-    string id = 1;
-}
-
-message GetRequest {
-    string id = 1;
-}
-
-message DeleteRequest {
+message CompanyId {
     string id = 1;
 }
 

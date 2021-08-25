@@ -26,7 +26,7 @@ func NewRespondentService(db *sqlx.DB, log logger.Logger) *respondentService {
 	}
 }
 
-func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb.CreatedResponse, error) {
+func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb.RespondentId, error) {
 	// TODO - validate inn
 	if !util.IsValidPhone(req.Phone) {
 		return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -40,12 +40,12 @@ func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb
 		return nil, helper.HandleError(s.logger, err, "error while creating new respondent", req, codes.Internal)
 	}
 
-	return &pb.CreatedResponse{
+	return &pb.RespondentId{
 		Id: id,
 	}, nil
 }
 
-func (s *respondentService) Update(ctx context.Context, req *pb.Respondent) (*pb.CreatedResponse, error) {
+func (s *respondentService) Update(ctx context.Context, req *pb.Respondent) (*pb.RespondentId, error) {
 	// TODO - validate inn
 	if !util.IsValidPhone(req.Phone) {
 		return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -59,12 +59,12 @@ func (s *respondentService) Update(ctx context.Context, req *pb.Respondent) (*pb
 		return nil, helper.HandleError(s.logger, err, "error while updating new respondent", req, codes.Internal)
 	}
 
-	return &pb.CreatedResponse{
+	return &pb.RespondentId{
 		Id: id,
 	}, nil
 }
 
-func (s *respondentService) Get(ctx context.Context, req *pb.GetRequest) (*pb.Respondent, error) {
+func (s *respondentService) Get(ctx context.Context, req *pb.RespondentId) (*pb.Respondent, error) {
 	respondent, err := s.storage.Respondent().Get(req.Id)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting respondent", req, codes.Internal)
@@ -82,7 +82,7 @@ func (s *respondentService) GetAll(ctx context.Context, req *pb.GetAllRespondent
 	return companies, nil
 }
 
-func (s *respondentService) Delete(ctx context.Context, req *pb.DeleteRequest) (*emptypb.Empty, error) {
+func (s *respondentService) Delete(ctx context.Context, req *pb.RespondentId) (*emptypb.Empty, error) {
 	err := s.storage.Respondent().Delete(req.Id)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting respondent", req, codes.Internal)

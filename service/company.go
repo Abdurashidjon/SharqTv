@@ -26,7 +26,7 @@ func NewCompanyService(db *sqlx.DB, log logger.Logger) *companyService {
 	}
 }
 
-func (s *companyService) Create(ctx context.Context, req *pb.Company) (*pb.CreatedResponse, error) {
+func (s *companyService) Create(ctx context.Context, req *pb.Company) (*pb.CompanyId, error) {
 	// TODO - validate inn
 	if !util.IsValidPhone(req.Phone) {
 		return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -40,12 +40,12 @@ func (s *companyService) Create(ctx context.Context, req *pb.Company) (*pb.Creat
 		return nil, helper.HandleError(s.logger, err, "error while creating new company", req, codes.Internal)
 	}
 
-	return &pb.CreatedResponse{
+	return &pb.CompanyId{
 		Id: id,
 	}, nil
 }
 
-func (s *companyService) Update(ctx context.Context, req *pb.Company) (*pb.CreatedResponse, error) {
+func (s *companyService) Update(ctx context.Context, req *pb.Company) (*pb.CompanyId, error) {
 	// TODO - validate inn
 	if !util.IsValidPhone(req.Phone) {
 		return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -59,12 +59,12 @@ func (s *companyService) Update(ctx context.Context, req *pb.Company) (*pb.Creat
 		return nil, helper.HandleError(s.logger, err, "error while updating new company", req, codes.Internal)
 	}
 
-	return &pb.CreatedResponse{
+	return &pb.CompanyId{
 		Id: id,
 	}, nil
 }
 
-func (s *companyService) Get(ctx context.Context, req *pb.GetRequest) (*pb.Company, error) {
+func (s *companyService) Get(ctx context.Context, req *pb.CompanyId) (*pb.Company, error) {
 	company, err := s.storage.Company().Get(req.Id)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting company", req, codes.Internal)
@@ -82,7 +82,7 @@ func (s *companyService) GetAll(ctx context.Context, req *pb.GetAllCompanyReques
 	return companies, nil
 }
 
-func (s *companyService) Delete(ctx context.Context, req *pb.DeleteRequest) (*emptypb.Empty, error) {
+func (s *companyService) Delete(ctx context.Context, req *pb.CompanyId) (*emptypb.Empty, error) {
 	err := s.storage.Company().Delete(req.Id)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting company", req, codes.Internal)

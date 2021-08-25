@@ -15,3 +15,7 @@ message GetAllRespondentResponse {
     repeated Respondent respondents = 1;
     int32 count = 2;
 }
+
+message RespondentId {
+    string id = 1;
+}
