@@ -57,12 +57,12 @@ mark-as-production-image:
 	docker push ${REGISTRY}/${PROJECT_NAME}/${APP}/${IMG_NAME}:production
 
 build-image:
-	@docker build --rm -t ${REGISTRY}/${PROJECT_NAMESPACE}/${PROJECT_NAME}:${TAG} .
-	@docker tag ${REGISTRY}/${PROJECT_NAMESPACE}/${PROJECT_NAME}:${TAG} ${REGISTRY}/${PROJECT_NAMESPACE}/${PROJECT_NAME}:${ENV_TAG}
+	@docker build --rm -t ${REGISTRY}/${PROJECT_NAME}/${APP}:${TAG} .
+	@docker tag ${REGISTRY}/${PROJECT_NAME}/${APP}:${TAG} ${REGISTRY}/${PROJECT_NAME}/${APP}:${ENV_TAG}
 
 push-image:
-	@docker push ${REGISTRY}/${PROJECT_NAMESPACE}/${PROJECT_NAME}:${TAG}
-	@docker push ${REGISTRY}/${PROJECT_NAMESPACE}/${PROJECT_NAME}:${ENV_TAG}
+	@docker push ${REGISTRY}/${PROJECT_NAME}/${APP}:${TAG}
+	@docker push ${REGISTRY}/${PROJECT_NAME}/${APP}:${ENV_TAG}
 
 swag-init:
 	swag init -g api/main.go
