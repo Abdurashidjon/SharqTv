@@ -39,7 +39,7 @@ deploy-prod:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
-    - ssh -o StrictHostKeyChecking=no $URECRUIT_PROD_USER@$URECRUIT_PROD_HOST 'docker service update --with-registry-auth
+    - ssh -o StrictHostKeyChecking=no $URECRUIT_PROD_USER@$URECRUIT_PROD_HOST -P $URECRUIT_SSH_PORT 'docker service update --with-registry-auth
       --image '$CI_REGISTRY'/'$CI_PROJECT_NAMESPACE'/'$CI_PROJECT_NAME':'$CI_PIPELINE_IID' '$CI_PROJECT_NAME''
   only:
     - master
