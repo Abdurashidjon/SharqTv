@@ -2,12 +2,10 @@ package service
 
 import (
 	"context"
-	"errors"
 
 	pb "bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/helper"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/logger"
-	"bitbucket.org/udevs/ur_go_user_service/pkg/util"
 	"bitbucket.org/udevs/ur_go_user_service/storage"
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/grpc/codes"
@@ -28,13 +26,13 @@ func NewRespondentService(db *sqlx.DB, log logger.Logger) *respondentService {
 
 func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb.RespondentId, error) {
 	// TODO - validate inn
-	if !util.IsValidPhone(req.Phone) {
-		return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
-	}
+	// if !util.IsValidPhone(req.Phone) {
+	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
+	// }
 
-	if !util.IsValidEmail(req.Email) {
-		return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
-	}
+	// if !util.IsValidEmail(req.Email) {
+	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
+	// }
 	id, err := s.storage.Respondent().Create(req)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while creating new respondent", req, codes.Internal)
@@ -47,13 +45,13 @@ func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb
 
 func (s *respondentService) Update(ctx context.Context, req *pb.Respondent) (*pb.RespondentId, error) {
 	// TODO - validate inn
-	if !util.IsValidPhone(req.Phone) {
-		return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
-	}
+	// if !util.IsValidPhone(req.Phone) {
+	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
+	// }
 
-	if !util.IsValidEmail(req.Email) {
-		return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
-	}
+	// if !util.IsValidEmail(req.Email) {
+	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
+	// }
 	id, err := s.storage.Respondent().Update(req)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while updating new respondent", req, codes.Internal)

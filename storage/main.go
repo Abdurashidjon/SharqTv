@@ -9,12 +9,14 @@ import (
 type StorageI interface {
 	Company() repo.CompanyRepoI
 	Respondent() repo.RespondentRepoI
+	Researcher() repo.ResearcherRepoI
 }
 
 type storagePg struct {
 	db             *sqlx.DB
 	companyRepo    repo.CompanyRepoI
 	respondentRepo repo.RespondentRepoI
+	researcherRepo repo.ResearcherRepoI
 }
 
 func NewStoragePg(db *sqlx.DB) StorageI {
@@ -22,6 +24,7 @@ func NewStoragePg(db *sqlx.DB) StorageI {
 		db:             db,
 		companyRepo:    postgres.NewCompanyRepo(db),
 		respondentRepo: postgres.NewRespondentRepo(db),
+		researcherRepo: postgres.NewResearcherRepo(db),
 	}
 }
 
@@ -31,4 +34,8 @@ func (s *storagePg) Company() repo.CompanyRepoI {
 
 func (s *storagePg) Respondent() repo.RespondentRepoI {
 	return s.respondentRepo
+}
+
+func (s *storagePg) Researcher() repo.ResearcherRepoI {
+	return s.researcherRepo
 }
