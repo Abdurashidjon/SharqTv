@@ -28,6 +28,7 @@ func main() {
 		cfg.PostgresDB,
 		"disable",
 	)
+	// conStr = `host=localhost port=5430 user=postgres password=postgres dbname=user_service sslmode=disable`
 	db, err := sqlx.Connect("postgres", conStr)
 	if err != nil {
 		log.Error("error while connecting database", logger.Error(err))
@@ -42,12 +43,14 @@ func main() {
 
 	companyService := service.NewCompanyService(db, log)
 	respondentService := service.NewRespondentService(db, log)
+	researcherService := service.NewResearcherService(db, log)
 
 	s := grpc.NewServer()
 	reflection.Register(s)
 
 	user_service.RegisterCompanyServiceServer(s, companyService)
 	user_service.RegisterRespondentServiceServer(s, respondentService)
+	user_service.RegisterResearcherServiceServer(s, researcherService)
 
 	log.Info("main: server running",
 		logger.String("port", cfg.RPCPort))
