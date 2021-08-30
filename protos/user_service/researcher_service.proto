@@ -20,4 +20,5 @@ message GetAllResearcherRequest {
     string name = 3;
     string email = 4;
     string phone = 5;
+    string company_id = 6;
 }

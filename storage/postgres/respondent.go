@@ -24,8 +24,11 @@ func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
                             name,
                             email,
                             phone,
-                            sber_id)
-                    VALUES ($1, $2, $3, $4, $5) `
+                            sber_id,
+                            company,
+                            position,
+                            description)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) `
 
 	_, err := r.db.Exec(
 		query,
@@ -34,6 +37,9 @@ func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
 		respondent.Email,
 		respondent.Phone,
 		respondent.SberId,
+		respondent.Company,
+		respondent.Position,
+		respondent.Description,
 	)
 
 	return respondent.Id, err
@@ -46,8 +52,11 @@ func (r *respondentRepo) Update(respondent *pb.Respondent) (string, error) {
                         email = $2,
                         phone = $3,
                         sber_id = $4,
+                        company = $5,
+                        position = $6,
+                        description = $7,
                         updated_at = current_timestamp
-                WHERE id = $5 `
+                WHERE id = $8 `
 
 	_, err := r.db.Exec(
 		query,
@@ -55,6 +64,9 @@ func (r *respondentRepo) Update(respondent *pb.Respondent) (string, error) {
 		respondent.Email,
 		respondent.Phone,
 		respondent.SberId,
+		respondent.Company,
+		respondent.Position,
+		respondent.Description,
 		respondent.Id,
 	)
 
@@ -68,7 +80,11 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
                     name,
                     email,
                     phone,
-                    sber_id
+                    sber_id,
+                    company,
+                    position,
+                    description,
+                    photo
                 FROM respondent
                 WHERE deleted_at = 0 AND id = $1 `
 
@@ -79,6 +95,10 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
 		&respondent.Email,
 		&respondent.Phone,
 		&respondent.SberId,
+		&respondent.Company,
+		&respondent.Position,
+		&respondent.Description,
+		&respondent.Photo,
 	)
 	if err != nil {
 		return nil, err
@@ -132,7 +152,11 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
                     name,
                     email,
                     phone,
-                    sber_id
+                    sber_id,
+                    company,
+                    position,
+                    description,
+                    photo
                 FROM respondent 
                 WHERE deleted_at = 0 %s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
@@ -148,6 +172,10 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
 			&respondent.Email,
 			&respondent.Phone,
 			&respondent.SberId,
+			&respondent.Company,
+			&respondent.Position,
+			&respondent.Description,
+			&respondent.Photo,
 		)
 		if err != nil {
 			return nil, err
@@ -169,5 +197,16 @@ func (r *respondentRepo) Delete(id string) error {
                 WHERE id = $1 AND deleted_at=0 `
 
 	_, err := r.db.Exec(query, id)
+	return err
+}
+
+func (r *respondentRepo) UpdatePhoto(user_id, photo string) error {
+	query := `UPDATE respondent
+                SET
+                    photo = $1,
+                    updated_at = current_timestamp
+                WHERE id = $2 `
+
+	_, err := r.db.Exec(query, photo, user_id)
 	return err
 }

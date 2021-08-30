@@ -9,6 +9,10 @@ message Respondent {
     string email = 3;
     string phone = 4;
     string sber_id = 5;
+    string photo = 6;
+    string company = 7;
+    string position = 8;
+    string description = 9;
 }
 
 message GetAllRespondentResponse {
@@ -18,4 +22,9 @@ message GetAllRespondentResponse {
 
 message RespondentId {
     string id = 1;
+}
+
+message UpdateRespondentPhoto {
+    string user_id = 1;
+    string photo = 2;
 }

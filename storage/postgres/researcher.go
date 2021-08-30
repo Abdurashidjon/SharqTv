@@ -25,8 +25,9 @@ func (r *researcherRepo) Create(researcher *pb.Researcher) (string, error) {
                             email,
                             phone,
                             profession_title,
-                            role_id)
-                    VALUES ($1, $2, $3, $4, $5, $6) `
+                            role_id,
+                            company_id)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7) `
 
 	_, err := r.db.Exec(
 		query,
@@ -36,6 +37,7 @@ func (r *researcherRepo) Create(researcher *pb.Researcher) (string, error) {
 		researcher.Phone,
 		researcher.ProfessionTitle,
 		researcher.RoleId,
+		researcher.CompanyId,
 	)
 
 	return researcher.Id, err
@@ -73,7 +75,8 @@ func (r *researcherRepo) Get(id string) (*pb.Researcher, error) {
                     email,
                     phone,
                     profession_title,
-                    role_id
+                    role_id,
+                    company_id
                 FROM researcher
                 WHERE deleted_at = 0 AND id = $1 `
 
@@ -85,6 +88,7 @@ func (r *researcherRepo) Get(id string) (*pb.Researcher, error) {
 		&researcher.Phone,
 		&researcher.ProfessionTitle,
 		&researcher.RoleId,
+		&researcher.CompanyId,
 	)
 	if err != nil {
 		return nil, err
@@ -101,6 +105,8 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 		args        = make(map[string]interface{})
 	)
 
+	args["company_id"] = req.CompanyId
+
 	if req.Name != "" {
 		filter += " AND name ilike '%' || :name || '%' "
 		args["name"] = req.Name
@@ -116,8 +122,8 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 		args["phone"] = req.Phone
 	}
 
-	countQuery := `SELECT count(1) FROM researcher WHERE deleted_at = 0 ` + filter
-	rows, err := r.db.NamedQuery(countQuery, args)
+	countQuery := `SELECT count(1) FROM researcher WHERE deleted_at = 0 AND company_id = :company_id %s`
+	rows, err := r.db.NamedQuery(fmt.Sprintf(countQuery, filter), args)
 	if err != nil {
 		return nil, err
 	}
@@ -139,9 +145,10 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
                     email,
                     phone,
                     profession_title,
-                    role_id
+                    role_id,
+                    company_id
                 FROM researcher 
-                WHERE deleted_at = 0 %s`
+                WHERE deleted_at = 0 AND company_id = :company_id %s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
 	if err != nil {
 		return nil, err
@@ -156,6 +163,7 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 			&researcher.Phone,
 			&researcher.ProfessionTitle,
 			&researcher.RoleId,
+			&researcher.CompanyId,
 		)
 		if err != nil {
 			return nil, err

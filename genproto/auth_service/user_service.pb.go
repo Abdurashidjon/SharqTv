@@ -32,7 +32,7 @@ var file_user_service_proto_rawDesc = []byte{
 	0x75, 0x73, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x0a, 0x61, 0x75, 0x74, 0x68,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x32, 0xd8, 0x04, 0x0a, 0x0b, 0x55, 0x73, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76,
+	0x6f, 0x74, 0x6f, 0x32, 0xae, 0x05, 0x0a, 0x0b, 0x55, 0x73, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76,
 	0x69, 0x63, 0x65, 0x12, 0x44, 0x0a, 0x0a, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65,
 	0x72, 0x12, 0x19, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x43, 0x72, 0x65,
 	0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x1a, 0x19, 0x2e, 0x67,
@@ -65,13 +65,19 @@ var file_user_service_proto_rawDesc = []byte{
 	0x6f, 0x2e, 0x4f, 0x6e, 0x65, 0x32, 0x4d, 0x61, 0x6e, 0x79, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x4d,
 	0x6f, 0x64, 0x65, 0x6c, 0x1a, 0x1c, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
 	0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x22, 0x00, 0x12, 0x48, 0x0a, 0x0c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
+	0x65, 0x6c, 0x22, 0x00, 0x12, 0x4b, 0x0a, 0x0c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
 	0x55, 0x73, 0x65, 0x72, 0x12, 0x1b, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
 	0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65,
-	0x6c, 0x1a, 0x19, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x17,
-	0x5a, 0x15, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x5f,
-	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6c, 0x1a, 0x1c, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x67,
+	0x69, 0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x51, 0x0a, 0x0f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d, 0x52, 0x65, 0x67, 0x69,
+	0x73, 0x74, 0x65, 0x72, 0x12, 0x1e, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d, 0x50, 0x61, 0x73, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x4d,
+	0x6f, 0x64, 0x65, 0x6c, 0x1a, 0x1c, 0x2e, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
+	0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x6f, 0x64,
+	0x65, 0x6c, 0x22, 0x00, 0x42, 0x17, 0x5a, 0x15, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x2f, 0x61, 0x75, 0x74, 0x68, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_user_service_proto_goTypes = []interface{}{
@@ -83,10 +89,12 @@ var file_user_service_proto_goTypes = []interface{}{
 	(*StandardLoginModel)(nil),      // 5: genproto.StandardLoginModel
 	(*One2ManyLoginModel)(nil),      // 6: genproto.One2ManyLoginModel
 	(*RegisterUserModel)(nil),       // 7: genproto.RegisterUserModel
-	(*CreatedResponse)(nil),         // 8: genproto.CreatedResponse
-	(*UserFullModel)(nil),           // 9: genproto.UserFullModel
-	(*emptypb.Empty)(nil),           // 10: google.protobuf.Empty
-	(*LoginResponseModel)(nil),      // 11: genproto.LoginResponseModel
+	(*ConfirmPasscodeModel)(nil),    // 8: genproto.ConfirmPasscodeModel
+	(*CreatedResponse)(nil),         // 9: genproto.CreatedResponse
+	(*UserFullModel)(nil),           // 10: genproto.UserFullModel
+	(*emptypb.Empty)(nil),           // 11: google.protobuf.Empty
+	(*LoginResponseModel)(nil),      // 12: genproto.LoginResponseModel
+	(*RegisteredResponse)(nil),      // 13: genproto.RegisteredResponse
 }
 var file_user_service_proto_depIdxs = []int32{
 	0,  // 0: genproto.UserService.CreateUser:input_type -> genproto.CreateUserModel
@@ -97,16 +105,18 @@ var file_user_service_proto_depIdxs = []int32{
 	5,  // 5: genproto.UserService.StandardLogin:input_type -> genproto.StandardLoginModel
 	6,  // 6: genproto.UserService.One2ManyLogin:input_type -> genproto.One2ManyLoginModel
 	7,  // 7: genproto.UserService.RegisterUser:input_type -> genproto.RegisterUserModel
-	8,  // 8: genproto.UserService.CreateUser:output_type -> genproto.CreatedResponse
-	8,  // 9: genproto.UserService.UpdateUser:output_type -> genproto.CreatedResponse
-	8,  // 10: genproto.UserService.UpdateUserPassword:output_type -> genproto.CreatedResponse
-	9,  // 11: genproto.UserService.GetUserFull:output_type -> genproto.UserFullModel
-	10, // 12: genproto.UserService.DeleteUser:output_type -> google.protobuf.Empty
-	11, // 13: genproto.UserService.StandardLogin:output_type -> genproto.LoginResponseModel
-	11, // 14: genproto.UserService.One2ManyLogin:output_type -> genproto.LoginResponseModel
-	8,  // 15: genproto.UserService.RegisterUser:output_type -> genproto.CreatedResponse
-	8,  // [8:16] is the sub-list for method output_type
-	0,  // [0:8] is the sub-list for method input_type
+	8,  // 8: genproto.UserService.ConfirmRegister:input_type -> genproto.ConfirmPasscodeModel
+	9,  // 9: genproto.UserService.CreateUser:output_type -> genproto.CreatedResponse
+	9,  // 10: genproto.UserService.UpdateUser:output_type -> genproto.CreatedResponse
+	9,  // 11: genproto.UserService.UpdateUserPassword:output_type -> genproto.CreatedResponse
+	10, // 12: genproto.UserService.GetUserFull:output_type -> genproto.UserFullModel
+	11, // 13: genproto.UserService.DeleteUser:output_type -> google.protobuf.Empty
+	12, // 14: genproto.UserService.StandardLogin:output_type -> genproto.LoginResponseModel
+	12, // 15: genproto.UserService.One2ManyLogin:output_type -> genproto.LoginResponseModel
+	13, // 16: genproto.UserService.RegisterUser:output_type -> genproto.RegisteredResponse
+	12, // 17: genproto.UserService.ConfirmRegister:output_type -> genproto.LoginResponseModel
+	9,  // [9:18] is the sub-list for method output_type
+	0,  // [0:9] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
@@ -157,7 +167,8 @@ type UserServiceClient interface {
 	DeleteUser(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	StandardLogin(ctx context.Context, in *StandardLoginModel, opts ...grpc.CallOption) (*LoginResponseModel, error)
 	One2ManyLogin(ctx context.Context, in *One2ManyLoginModel, opts ...grpc.CallOption) (*LoginResponseModel, error)
-	RegisterUser(ctx context.Context, in *RegisterUserModel, opts ...grpc.CallOption) (*CreatedResponse, error)
+	RegisterUser(ctx context.Context, in *RegisterUserModel, opts ...grpc.CallOption) (*RegisteredResponse, error)
+	ConfirmRegister(ctx context.Context, in *ConfirmPasscodeModel, opts ...grpc.CallOption) (*LoginResponseModel, error)
 }
 
 type userServiceClient struct {
@@ -231,9 +242,18 @@ func (c *userServiceClient) One2ManyLogin(ctx context.Context, in *One2ManyLogin
 	return out, nil
 }
 
-func (c *userServiceClient) RegisterUser(ctx context.Context, in *RegisterUserModel, opts ...grpc.CallOption) (*CreatedResponse, error) {
-	out := new(CreatedResponse)
+func (c *userServiceClient) RegisterUser(ctx context.Context, in *RegisterUserModel, opts ...grpc.CallOption) (*RegisteredResponse, error) {
+	out := new(RegisteredResponse)
 	err := c.cc.Invoke(ctx, "/genproto.UserService/RegisterUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) ConfirmRegister(ctx context.Context, in *ConfirmPasscodeModel, opts ...grpc.CallOption) (*LoginResponseModel, error) {
+	out := new(LoginResponseModel)
+	err := c.cc.Invoke(ctx, "/genproto.UserService/ConfirmRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +269,8 @@ type UserServiceServer interface {
 	DeleteUser(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	StandardLogin(context.Context, *StandardLoginModel) (*LoginResponseModel, error)
 	One2ManyLogin(context.Context, *One2ManyLoginModel) (*LoginResponseModel, error)
-	RegisterUser(context.Context, *RegisterUserModel) (*CreatedResponse, error)
+	RegisterUser(context.Context, *RegisterUserModel) (*RegisteredResponse, error)
+	ConfirmRegister(context.Context, *ConfirmPasscodeModel) (*LoginResponseModel, error)
 }
 
 // UnimplementedUserServiceServer can be embedded to have forward compatible implementations.
@@ -277,8 +298,11 @@ func (*UnimplementedUserServiceServer) StandardLogin(context.Context, *StandardL
 func (*UnimplementedUserServiceServer) One2ManyLogin(context.Context, *One2ManyLoginModel) (*LoginResponseModel, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method One2ManyLogin not implemented")
 }
-func (*UnimplementedUserServiceServer) RegisterUser(context.Context, *RegisterUserModel) (*CreatedResponse, error) {
+func (*UnimplementedUserServiceServer) RegisterUser(context.Context, *RegisterUserModel) (*RegisteredResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterUser not implemented")
+}
+func (*UnimplementedUserServiceServer) ConfirmRegister(context.Context, *ConfirmPasscodeModel) (*LoginResponseModel, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfirmRegister not implemented")
 }
 
 func RegisterUserServiceServer(s *grpc.Server, srv UserServiceServer) {
@@ -429,6 +453,24 @@ func _UserService_RegisterUser_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_ConfirmRegister_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfirmPasscodeModel)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ConfirmRegister(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/genproto.UserService/ConfirmRegister",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ConfirmRegister(ctx, req.(*ConfirmPasscodeModel))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "genproto.UserService",
 	HandlerType: (*UserServiceServer)(nil),
@@ -464,6 +506,10 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterUser",
 			Handler:    _UserService_RegisterUser_Handler,
+		},
+		{
+			MethodName: "ConfirmRegister",
+			Handler:    _UserService_ConfirmRegister_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
