@@ -88,3 +88,12 @@ func (s *respondentService) Delete(ctx context.Context, req *pb.RespondentId) (*
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *respondentService) UpdatePhoto(ctx context.Context, req *pb.UpdateRespondentPhoto) (*emptypb.Empty, error) {
+	err := s.storage.Respondent().UpdatePhoto(req.UserId, req.Photo)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while updating respondent photo", req, codes.Internal)
+	}
+
+	return &emptypb.Empty{}, nil
+}

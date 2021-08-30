@@ -58,3 +58,8 @@ message UserModel {
     string updated_at = 10;
     string expires_at = 11;
 }
+
+message RegisteredResponse {
+    string user_id = 1;
+    string passcode_token = 2;
+}

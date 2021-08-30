@@ -15,5 +15,6 @@ service UserService {
     rpc DeleteUser(DeleteRequest) returns (google.protobuf.Empty) {}
     rpc StandardLogin(StandardLoginModel) returns (LoginResponseModel) {}
     rpc One2ManyLogin(One2ManyLoginModel) returns (LoginResponseModel) {}
-    rpc RegisterUser(RegisterUserModel) returns (CreatedResponse) {}
+    rpc RegisterUser(RegisterUserModel) returns (RegisteredResponse) {}
+    rpc ConfirmRegister(ConfirmPasscodeModel) returns (LoginResponseModel) {}
 }

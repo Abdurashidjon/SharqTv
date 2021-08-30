@@ -10,6 +10,7 @@ message Researcher {
     string phone = 4;
     string profession_title = 5;
     string role_id = 6;
+    string company_id = 7;
 }
 
 message GetAllResearcherResponse {

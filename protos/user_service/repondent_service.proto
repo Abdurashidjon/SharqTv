@@ -12,8 +12,8 @@ service RespondentService {
     rpc Get(RespondentId) returns (Respondent) {}
     rpc GetAll(GetAllRespondentRequest) returns (GetAllRespondentResponse) {}
     rpc Delete(RespondentId) returns (google.protobuf.Empty) {}
+    rpc UpdatePhoto(UpdateRespondentPhoto) returns (google.protobuf.Empty) {}
 }
-
 
 message GetAllRespondentRequest {
     int64 offset = 1;
