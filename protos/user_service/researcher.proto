@@ -11,6 +11,7 @@ message Researcher {
     string profession_title = 5;
     string role_id = 6;
     string company_id = 7;
+    string photo = 8;
 }
 
 message GetAllResearcherResponse {
@@ -20,4 +21,9 @@ message GetAllResearcherResponse {
 
 message ResearcherId {
     string id = 1;
+}
+
+message UpdateResearcherPhoto {
+    string user_id = 1;
+    string photo = 2;
 }

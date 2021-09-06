@@ -28,7 +28,7 @@ func main() {
 		cfg.PostgresDB,
 		"disable",
 	)
-	// conStr = `host=localhost port=5430 user=postgres password=postgres dbname=user_service sslmode=disable`
+	// conStr = `host=localhost port=5432 user=postgres password=20072003 dbname=user_service sslmode=disable`
 	db, err := sqlx.Connect("postgres", conStr)
 	if err != nil {
 		log.Error("error while connecting database", logger.Error(err))

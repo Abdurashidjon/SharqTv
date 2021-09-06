@@ -90,3 +90,12 @@ func (s *researcherService) Delete(ctx context.Context, req *pb.ResearcherId) (*
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *researcherService) UpdatePhoto(ctx context.Context, req *pb.UpdateResearcherPhoto) (*emptypb.Empty, error) {
+	err := s.storage.Researcher().UpdatePhoto(req.UserId, req.Photo)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while updating respondent photo", req, codes.Internal)
+	}
+
+	return &emptypb.Empty{}, nil
+}

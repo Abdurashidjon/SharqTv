@@ -52,7 +52,7 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
                         profession_title = $4,
                         role_id = $5,
                         updated_at = current_timestamp
-                WHERE id = $6 `
+                WHERE id = $7 `
 
 	_, err := r.db.Exec(
 		query,
@@ -76,7 +76,8 @@ func (r *researcherRepo) Get(id string) (*pb.Researcher, error) {
                     phone,
                     profession_title,
                     role_id,
-                    company_id
+                    company_id,
+					photo
                 FROM researcher
                 WHERE deleted_at = 0 AND id = $1 `
 
@@ -89,6 +90,7 @@ func (r *researcherRepo) Get(id string) (*pb.Researcher, error) {
 		&researcher.ProfessionTitle,
 		&researcher.RoleId,
 		&researcher.CompanyId,
+		&researcher.Photo,
 	)
 	if err != nil {
 		return nil, err
@@ -146,7 +148,8 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
                     phone,
                     profession_title,
                     role_id,
-                    company_id
+                    company_id,
+					photo
                 FROM researcher 
                 WHERE deleted_at = 0 AND company_id = :company_id %s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
@@ -164,6 +167,7 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 			&researcher.ProfessionTitle,
 			&researcher.RoleId,
 			&researcher.CompanyId,
+			&researcher.Photo,
 		)
 		if err != nil {
 			return nil, err
@@ -185,5 +189,16 @@ func (r *researcherRepo) Delete(id string) error {
                 WHERE id = $1 AND deleted_at=0 `
 
 	_, err := r.db.Exec(query, id)
+	return err
+}
+
+func (r *researcherRepo) UpdatePhoto(user_id, photo string) error {
+	query := `UPDATE respondent
+                SET
+                    photo = $1,
+                    updated_at = current_timestamp
+                WHERE id = $2 `
+
+	_, err := r.db.Exec(query, photo, user_id)
 	return err
 }

@@ -12,6 +12,7 @@ service ResearcherService {
     rpc Get(ResearcherId) returns (Researcher) {}
     rpc GetAll(GetAllResearcherRequest) returns (GetAllResearcherResponse) {}
     rpc Delete(ResearcherId) returns (google.protobuf.Empty) {}
+    rpc UpdatePhoto(UpdateResearcherPhoto) returns (google.protobuf.Empty) {}
 }
 
 message GetAllResearcherRequest {
