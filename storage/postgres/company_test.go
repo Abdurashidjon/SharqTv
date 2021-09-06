@@ -1,6 +1,7 @@
 package postgres_test
 
 import (
+	"fmt"
 	"testing"
 
 	pb "bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
@@ -10,10 +11,10 @@ import (
 func createCompany(t *testing.T) *pb.Company {
 
 	company := &pb.Company{
-		Id:        "1",
-		Name:      "smth",
-		Inn:       "sdsds",
-		OwnerName: "man",
+		Id:        createRandomId(t),
+		Name:      fakeData.CompanyName(),
+		Inn:       fmt.Sprintf("%d", fakeData.Rand.Intn(1e6)),
+		OwnerName: fakeData.Name(),
 	}
 
 	res, err := strg.Company().Create(company)

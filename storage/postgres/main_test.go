@@ -41,6 +41,7 @@ func TestMain(m *testing.M) {
 		cfg.PostgresDB,
 		"disable",
 	)
+	conStr = `host=localhost port=5432 user=postgres password=20072003 dbname=user_service sslmode=disable`
 	fakeData, _ = faker.New("en")
 	postgresConn, err = sqlx.Open("postgres", conStr)
 

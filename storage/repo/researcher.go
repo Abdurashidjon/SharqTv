@@ -8,4 +8,5 @@ type ResearcherRepoI interface {
 	Get(id string) (*pb.Researcher, error)
 	GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllResearcherResponse, error)
 	Delete(id string) error
+	UpdatePhoto(user_id, photo string) error
 }

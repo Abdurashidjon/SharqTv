@@ -130,7 +130,7 @@ var file_researcher_service_proto_rawDesc = []byte{
 	0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65,
 	0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x12, 0x1d, 0x0a,
 	0x0a, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x64, 0x32, 0xcd, 0x02, 0x0a,
+	0x09, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x64, 0x32, 0x97, 0x03, 0x0a,
 	0x11, 0x52, 0x65, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69,
 	0x63, 0x65, 0x12, 0x38, 0x0a, 0x06, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x12, 0x14, 0x2e, 0x67,
 	0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68,
@@ -151,9 +151,14 @@ var file_researcher_service_proto_rawDesc = []byte{
 	0x12, 0x3a, 0x0a, 0x06, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x12, 0x16, 0x2e, 0x67, 0x65, 0x6e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x65, 0x72,
 	0x49, 0x64, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x42, 0x17, 0x5a, 0x15,
-	0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x73, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x12, 0x48, 0x0a, 0x0b,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x12, 0x1f, 0x2e, 0x67, 0x65,
+	0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73,
+	0x65, 0x61, 0x72, 0x63, 0x68, 0x65, 0x72, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x1a, 0x16, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45,
+	0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x42, 0x17, 0x5a, 0x15, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x2f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -173,8 +178,9 @@ var file_researcher_service_proto_goTypes = []interface{}{
 	(*GetAllResearcherRequest)(nil),  // 0: genproto.GetAllResearcherRequest
 	(*Researcher)(nil),               // 1: genproto.Researcher
 	(*ResearcherId)(nil),             // 2: genproto.ResearcherId
-	(*GetAllResearcherResponse)(nil), // 3: genproto.GetAllResearcherResponse
-	(*emptypb.Empty)(nil),            // 4: google.protobuf.Empty
+	(*UpdateResearcherPhoto)(nil),    // 3: genproto.UpdateResearcherPhoto
+	(*GetAllResearcherResponse)(nil), // 4: genproto.GetAllResearcherResponse
+	(*emptypb.Empty)(nil),            // 5: google.protobuf.Empty
 }
 var file_researcher_service_proto_depIdxs = []int32{
 	1, // 0: genproto.ResearcherService.Create:input_type -> genproto.Researcher
@@ -182,13 +188,15 @@ var file_researcher_service_proto_depIdxs = []int32{
 	2, // 2: genproto.ResearcherService.Get:input_type -> genproto.ResearcherId
 	0, // 3: genproto.ResearcherService.GetAll:input_type -> genproto.GetAllResearcherRequest
 	2, // 4: genproto.ResearcherService.Delete:input_type -> genproto.ResearcherId
-	2, // 5: genproto.ResearcherService.Create:output_type -> genproto.ResearcherId
-	2, // 6: genproto.ResearcherService.Update:output_type -> genproto.ResearcherId
-	1, // 7: genproto.ResearcherService.Get:output_type -> genproto.Researcher
-	3, // 8: genproto.ResearcherService.GetAll:output_type -> genproto.GetAllResearcherResponse
-	4, // 9: genproto.ResearcherService.Delete:output_type -> google.protobuf.Empty
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	3, // 5: genproto.ResearcherService.UpdatePhoto:input_type -> genproto.UpdateResearcherPhoto
+	2, // 6: genproto.ResearcherService.Create:output_type -> genproto.ResearcherId
+	2, // 7: genproto.ResearcherService.Update:output_type -> genproto.ResearcherId
+	1, // 8: genproto.ResearcherService.Get:output_type -> genproto.Researcher
+	4, // 9: genproto.ResearcherService.GetAll:output_type -> genproto.GetAllResearcherResponse
+	5, // 10: genproto.ResearcherService.Delete:output_type -> google.protobuf.Empty
+	5, // 11: genproto.ResearcherService.UpdatePhoto:output_type -> google.protobuf.Empty
+	6, // [6:12] is the sub-list for method output_type
+	0, // [0:6] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -251,6 +259,7 @@ type ResearcherServiceClient interface {
 	Get(ctx context.Context, in *ResearcherId, opts ...grpc.CallOption) (*Researcher, error)
 	GetAll(ctx context.Context, in *GetAllResearcherRequest, opts ...grpc.CallOption) (*GetAllResearcherResponse, error)
 	Delete(ctx context.Context, in *ResearcherId, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdatePhoto(ctx context.Context, in *UpdateResearcherPhoto, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type researcherServiceClient struct {
@@ -306,6 +315,15 @@ func (c *researcherServiceClient) Delete(ctx context.Context, in *ResearcherId, 
 	return out, nil
 }
 
+func (c *researcherServiceClient) UpdatePhoto(ctx context.Context, in *UpdateResearcherPhoto, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/genproto.ResearcherService/UpdatePhoto", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ResearcherServiceServer is the server API for ResearcherService service.
 type ResearcherServiceServer interface {
 	Create(context.Context, *Researcher) (*ResearcherId, error)
@@ -313,6 +331,7 @@ type ResearcherServiceServer interface {
 	Get(context.Context, *ResearcherId) (*Researcher, error)
 	GetAll(context.Context, *GetAllResearcherRequest) (*GetAllResearcherResponse, error)
 	Delete(context.Context, *ResearcherId) (*emptypb.Empty, error)
+	UpdatePhoto(context.Context, *UpdateResearcherPhoto) (*emptypb.Empty, error)
 }
 
 // UnimplementedResearcherServiceServer can be embedded to have forward compatible implementations.
@@ -333,6 +352,9 @@ func (*UnimplementedResearcherServiceServer) GetAll(context.Context, *GetAllRese
 }
 func (*UnimplementedResearcherServiceServer) Delete(context.Context, *ResearcherId) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (*UnimplementedResearcherServiceServer) UpdatePhoto(context.Context, *UpdateResearcherPhoto) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePhoto not implemented")
 }
 
 func RegisterResearcherServiceServer(s *grpc.Server, srv ResearcherServiceServer) {
@@ -429,6 +451,24 @@ func _ResearcherService_Delete_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ResearcherService_UpdatePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateResearcherPhoto)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResearcherServiceServer).UpdatePhoto(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/genproto.ResearcherService/UpdatePhoto",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResearcherServiceServer).UpdatePhoto(ctx, req.(*UpdateResearcherPhoto))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ResearcherService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "genproto.ResearcherService",
 	HandlerType: (*ResearcherServiceServer)(nil),
@@ -452,6 +492,10 @@ var _ResearcherService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _ResearcherService_Delete_Handler,
+		},
+		{
+			MethodName: "UpdatePhoto",
+			Handler:    _ResearcherService_UpdatePhoto_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
