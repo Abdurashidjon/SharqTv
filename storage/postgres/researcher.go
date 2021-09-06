@@ -52,7 +52,7 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
                         profession_title = $4,
                         role_id = $5,
                         updated_at = current_timestamp
-                WHERE id = $7 `
+                WHERE id = $6 `
 
 	_, err := r.db.Exec(
 		query,
