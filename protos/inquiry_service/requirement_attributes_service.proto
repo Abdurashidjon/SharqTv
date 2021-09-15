@@ -1,0 +1,38 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/inquiry_service";
+
+import "requirement_attributes.proto";
+import "google/protobuf/empty.proto";
+
+service AttributesService {
+    rpc Create(Attribute) returns (AttributeId) {}
+    rpc Update(Attribute) returns (AttributeId) {}
+    rpc Get(AttributeId) returns (Attribute) {}
+    rpc GetAll(GetAllAttributeRequest) returns (GetAllAttributeResponse) {}
+    rpc GetAllAttributeValues(GetAllAttributeValuesRequest) returns (GetAllAttributeValuesResponse) {}
+    rpc UpdateAttributeValues(RequirementValue) returns (RequirementValueId) {}
+    rpc CreateAttributeValues (RequirementValue) returns (RequirementValueId) {}
+    rpc GetAttributeValuesByValue (GetAttributeValuesRequestByValue) returns (RequirementValue) {}
+    rpc Delete(AttributeId) returns (google.protobuf.Empty) {}
+}
+
+message GetAllAttributeRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+    string name = 3;
+    string input_type = 4;
+    string data_type = 5;
+}
+
+message GetAllAttributeValuesRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+    string requirement_attribute_id = 3;
+    string value = 4;
+}
+
+message GetAttributeValuesRequestByValue {
+    string value = 1;
+}

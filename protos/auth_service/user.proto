@@ -37,7 +37,8 @@ message UpdateUserModel {
 
 message UpdateUserPasswordModel {
     string user_id = 1;
-    string password = 2;
+    string new_password = 2;
+    string old_password = 3;
 }
 
 message UpdateUserActiveModel {
@@ -62,4 +63,14 @@ message UserModel {
 message RegisteredResponse {
     string user_id = 1;
     string passcode_token = 2;
+}
+
+message UserEmail {
+    string email = 1;
+    string base_url = 2;
+}
+
+message UpdateUserPasswordByEmailRequest {
+    string token = 1;
+    string password = 2;
 }

@@ -1,0 +1,69 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/inquiry_service";
+
+import "requirement_attributes.proto";
+
+message Inquiry {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string status_id = 4;
+    string partisipant_role = 5;
+    string study_type = 6;
+    string interview_type = 7;
+    string from_date = 8;
+    string to_date = 9;
+    string researcher_id = 10;
+    int32 duration = 11;
+    string connection_info = 12;
+    int32 number_of_partisipants = 13;
+    string device = 14;
+    string os = 15;
+    float cost = 16;
+    float additional_cost = 17;
+    string nda = 18;
+    string company_id = 19;
+    string created_at = 20;
+    string updated_at = 21;
+    repeated InquiryRequirement inquiry_requirements = 22;
+    repeated InquiryTimeTable inquiry_timetables = 23;
+    repeated StatusNotes status_notes = 24;
+}
+
+message StatusNotes {
+    string id = 1;
+    string inquiry_id = 2;
+    string researcher_id = 3;
+    string created_at = 4;
+    string status_id = 5;
+}
+
+message StatusNotesId {
+    string id = 1;
+}
+
+message InquiryRequirement {
+    string id = 1;
+    Attribute requirement_attribute = 2;
+    RequirementValue requirement_value = 3;
+}
+
+message InquiryTimeTable {
+    string id = 1;
+    string dates = 2;
+    string start_time = 3;
+    string end_time = 4;
+    int32 number_of_partisipants = 5;
+    int32 number_of_applicants = 6;
+}
+
+message InquiryId {
+    string id = 1;
+}
+
+message GetAllInquiryResponse {
+    repeated Inquiry inquiries = 1;
+    int32 count = 2;
+}

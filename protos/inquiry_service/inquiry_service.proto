@@ -1,0 +1,25 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/inquiry_service";
+
+import "inquiry.proto";
+import "google/protobuf/empty.proto";
+
+service InquiryService {
+    rpc Create(Inquiry) returns (InquiryId) {}
+    rpc Update(Inquiry) returns (InquiryId) {}
+    rpc Get(InquiryId) returns (Inquiry) {}
+    rpc GetAll(GetAllInquiryRequest) returns (GetAllInquiryResponse) {}
+    rpc Delete(InquiryId) returns (google.protobuf.Empty) {}
+    rpc UpdateStatus(StatusNotes) returns (google.protobuf.Empty) {}
+}
+
+message GetAllInquiryRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+    string name = 3;
+    string status_id = 4;
+    string researcher_id = 5;
+    string company_id = 6;
+}

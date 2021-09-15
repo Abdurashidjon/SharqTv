@@ -51,6 +51,7 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
                         phone = $3,
                         profession_title = $4,
                         role_id = $5,
+						company_id =$6,
                         updated_at = current_timestamp
                 WHERE id = $7 `
 
@@ -61,6 +62,7 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
 		researcher.Phone,
 		researcher.ProfessionTitle,
 		researcher.RoleId,
+		researcher.CompanyId,
 		researcher.Id,
 	)
 

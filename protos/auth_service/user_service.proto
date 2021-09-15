@@ -17,4 +17,6 @@ service UserService {
     rpc One2ManyLogin(One2ManyLoginModel) returns (LoginResponseModel) {}
     rpc RegisterUser(RegisterUserModel) returns (RegisteredResponse) {}
     rpc ConfirmRegister(ConfirmPasscodeModel) returns (LoginResponseModel) {}
+    rpc SendUpdatePasswordUrlToEmail(UserEmail) returns (google.protobuf.Empty) {}
+    rpc UpdateUserPasswordByEmail(UpdateUserPasswordByEmailRequest) returns (google.protobuf.Empty) {}
 }
