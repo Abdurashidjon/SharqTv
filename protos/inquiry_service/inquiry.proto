@@ -24,12 +24,14 @@ message Inquiry {
     float cost = 16;
     float additional_cost = 17;
     string nda = 18;
-    string company_id = 19;
-    string created_at = 20;
-    string updated_at = 21;
-    repeated InquiryRequirement inquiry_requirements = 22;
-    repeated InquiryTimeTable inquiry_timetables = 23;
-    repeated StatusNotes status_notes = 24;
+    string screener_project_id = 19;
+    string screener_survey_id = 20;
+    string company_id = 21;
+    string created_at = 22;
+    string updated_at = 23;
+    repeated InquiryRequirement inquiry_requirements = 24;
+    repeated InquiryTimeTable inquiry_timetables = 25;
+    repeated StatusNotes status_notes = 26;
 }
 
 message StatusNotes {
@@ -67,3 +69,6 @@ message GetAllInquiryResponse {
     repeated Inquiry inquiries = 1;
     int32 count = 2;
 }
+
+
+//git checking

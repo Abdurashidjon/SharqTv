@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package genproto;
+option go_package = "genproto/inquiry_service";
+
+message RespondentInquiry {
+    string id = 1;
+    string respondent_id = 2;
+    string inquiry_id = 3;
+    string inquiry_timetable_id = 4;
+    string link = 5;
+    string note = 6;
+    float rating = 7;
+    string status_id = 8;
+}
+
+message RespondentInquiryId {
+    string id = 1;
+}
+
+message GetAllRespondentInquiryResponse {
+    repeated RespondentInquiry inquiries = 1;
+    int32 count = 2;
+}

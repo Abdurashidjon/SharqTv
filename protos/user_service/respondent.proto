@@ -13,6 +13,7 @@ message Respondent {
     string company = 7;
     string position = 8;
     string description = 9;
+    Rating rating = 10;
 }
 
 message GetAllRespondentResponse {
@@ -27,4 +28,17 @@ message RespondentId {
 message UpdateRespondentPhoto {
     string user_id = 1;
     string photo = 2;
+}
+
+message Rating {
+    float communication = 1;
+    float experience = 2;
+    float punctuality = 3;
+}
+
+message UpdateRespondentRating {
+    string user_id = 1;
+    float communication = 2;
+    float experience = 3;
+    float punctuality = 4;
 }

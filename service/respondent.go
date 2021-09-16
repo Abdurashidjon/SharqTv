@@ -97,3 +97,12 @@ func (s *respondentService) UpdatePhoto(ctx context.Context, req *pb.UpdateRespo
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *respondentService) UpdateRating(ctx context.Context, req *pb.UpdateRespondentRating) (*emptypb.Empty, error) {
+	err := s.storage.Respondent().UpdateRating(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while updating respondent rating", req, codes.Internal)
+	}
+
+	return &emptypb.Empty{}, nil
+}
