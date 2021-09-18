@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package genproto;
+option go_package = "genproto/inquiry_service";
+
+import "respondent_inquiry.proto";
+import "google/protobuf/empty.proto";
+
+service RespondentInquiryService {
+    rpc Create(RespondentInquiry) returns (RespondentInquiryId) {}
+    rpc Update(RespondentInquiry) returns (RespondentInquiryId) {}
+    rpc Get(RespondentInquiryId) returns (RespondentInquiry) {}
+    rpc GetAll(GetAllRespondentInquiryRequest) returns (GetAllRespondentInquiryResponse) {}
+    rpc Delete (RespondentInquiryId) returns (google.protobuf.Empty) {}
+}
+
+message GetAllRespondentInquiryRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+}

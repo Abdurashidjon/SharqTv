@@ -51,6 +51,7 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
                         phone = $3,
                         profession_title = $4,
                         role_id = $5,
+						company_id =$6,
                         updated_at = current_timestamp
                 WHERE id = $6 `
 
@@ -61,6 +62,7 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
 		researcher.Phone,
 		researcher.ProfessionTitle,
 		researcher.RoleId,
+		researcher.CompanyId,
 		researcher.Id,
 	)
 
@@ -106,8 +108,10 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 		researchers []*pb.Researcher
 		args        = make(map[string]interface{})
 	)
-
-	args["company_id"] = req.CompanyId
+	if req.CompanyId != "" {
+		filter += " AND company_id = :company_id "
+		args["company_id"] = req.CompanyId
+	}
 
 	if req.Name != "" {
 		filter += " AND name ilike '%' || :name || '%' "
@@ -124,7 +128,7 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 		args["phone"] = req.Phone
 	}
 
-	countQuery := `SELECT count(1) FROM researcher WHERE deleted_at = 0 AND company_id = :company_id %s`
+	countQuery := `SELECT count(1) FROM researcher WHERE deleted_at = 0 %s`
 	rows, err := r.db.NamedQuery(fmt.Sprintf(countQuery, filter), args)
 	if err != nil {
 		return nil, err
@@ -151,7 +155,7 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
                     company_id,
 					photo
                 FROM researcher 
-                WHERE deleted_at = 0 AND company_id = :company_id %s`
+                WHERE deleted_at = 0 %s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
 	if err != nil {
 		return nil, err
@@ -193,7 +197,7 @@ func (r *researcherRepo) Delete(id string) error {
 }
 
 func (r *researcherRepo) UpdatePhoto(user_id, photo string) error {
-	query := `UPDATE respondent
+	query := `UPDATE researcher
                 SET
                     photo = $1,
                     updated_at = current_timestamp

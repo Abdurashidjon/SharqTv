@@ -9,4 +9,5 @@ type RespondentRepoI interface {
 	GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllRespondentResponse, error)
 	Delete(id string) error
 	UpdatePhoto(user_id, photo string) error
+	UpdateRating(rating *pb.UpdateRespondentRating) error
 }

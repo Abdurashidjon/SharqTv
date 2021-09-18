@@ -27,8 +27,12 @@ func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
                             sber_id,
                             company,
                             position,
-                            description)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) `
+                            description,
+							rating_communication,
+							rating_experience,
+							rating_punctuality
+							)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) `
 
 	_, err := r.db.Exec(
 		query,
@@ -40,6 +44,9 @@ func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
 		respondent.Company,
 		respondent.Position,
 		respondent.Description,
+		respondent.Rating.Communication,
+		respondent.Rating.Experience,
+		respondent.Rating.Punctuality,
 	)
 
 	return respondent.Id, err
@@ -75,6 +82,7 @@ func (r *respondentRepo) Update(respondent *pb.Respondent) (string, error) {
 
 func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
 	var respondent pb.Respondent
+	var rating pb.Rating
 	query := `SELECT 
                     id,
                     name,
@@ -84,7 +92,10 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
                     company,
                     position,
                     description,
-                    photo
+                    photo,
+					rating_communication,
+					rating_experience,
+					rating_punctuality
                 FROM respondent
                 WHERE deleted_at = 0 AND id = $1 `
 
@@ -99,11 +110,14 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
 		&respondent.Position,
 		&respondent.Description,
 		&respondent.Photo,
+		&rating.Communication,
+		&rating.Experience,
+		&rating.Punctuality,
 	)
 	if err != nil {
 		return nil, err
 	}
-
+	respondent.Rating = &rating
 	return &respondent, nil
 }
 
@@ -156,7 +170,10 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
                     company,
                     position,
                     description,
-                    photo
+                    photo,
+					rating_communication,
+					rating_experience,
+					rating_punctuality
                 FROM respondent 
                 WHERE deleted_at = 0 %s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
@@ -166,6 +183,7 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
 
 	for rows.Next() {
 		var respondent pb.Respondent
+		var rating pb.Rating
 		err = rows.Scan(
 			&respondent.Id,
 			&respondent.Name,
@@ -176,10 +194,14 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
 			&respondent.Position,
 			&respondent.Description,
 			&respondent.Photo,
+			&rating.Communication,
+			&rating.Experience,
+			&rating.Punctuality,
 		)
 		if err != nil {
 			return nil, err
 		}
+		respondent.Rating = &rating
 
 		respondents = append(respondents, &respondent)
 	}
@@ -208,5 +230,23 @@ func (r *respondentRepo) UpdatePhoto(user_id, photo string) error {
                 WHERE id = $2 `
 
 	_, err := r.db.Exec(query, photo, user_id)
+	return err
+}
+
+func (r *respondentRepo) UpdateRating(rating *pb.UpdateRespondentRating) error {
+	query := `UPDATE respondent
+				SET
+					rating_communication = $1,
+					rating_experience = $2,
+					rating_punctuality = $3
+				WHERE 
+					id = $4`
+	_, err := r.db.Exec(
+		query,
+		rating.Communication,
+		rating.Experience,
+		rating.Punctuality,
+		rating.UserId,
+	)
 	return err
 }

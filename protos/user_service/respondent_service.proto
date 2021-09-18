@@ -13,6 +13,7 @@ service RespondentService {
     rpc GetAll(GetAllRespondentRequest) returns (GetAllRespondentResponse) {}
     rpc Delete(RespondentId) returns (google.protobuf.Empty) {}
     rpc UpdatePhoto(UpdateRespondentPhoto) returns (google.protobuf.Empty) {}
+    rpc UpdateRating(UpdateRespondentRating) returns (google.protobuf.Empty) {}
 }
 
 message GetAllRespondentRequest {
