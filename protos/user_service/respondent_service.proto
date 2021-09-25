@@ -7,13 +7,14 @@ import "respondent.proto";
 import "google/protobuf/empty.proto";
 
 service RespondentService {
-    rpc Create(Respondent) returns (RespondentId) {}
-    rpc Update(Respondent) returns (RespondentId) {}
+    rpc Create(CreateRespondent) returns (RespondentId) {}
+    rpc Update(UpdateRespondent) returns (RespondentId) {}
     rpc Get(RespondentId) returns (Respondent) {}
     rpc GetAll(GetAllRespondentRequest) returns (GetAllRespondentResponse) {}
     rpc Delete(RespondentId) returns (google.protobuf.Empty) {}
     rpc UpdatePhoto(UpdateRespondentPhoto) returns (google.protobuf.Empty) {}
     rpc UpdateRating(UpdateRespondentRating) returns (google.protobuf.Empty) {}
+    rpc UpdateRespondentInn(UpdateRespondentInnRequest) returns (google.protobuf.Empty) {}
 }
 
 message GetAllRespondentRequest {

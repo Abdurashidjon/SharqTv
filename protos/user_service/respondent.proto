@@ -8,6 +8,32 @@ message Respondent {
     string name = 2;
     string email = 3;
     string phone = 4;
+    string inn = 5;
+    string sber_id = 6;
+    string photo = 7;
+    string company = 8;
+    string position = 9;
+    string description = 10;
+    Rating rating = 11;
+}
+
+message CreateRespondent {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string sber_id = 5;
+    string photo = 6;
+    string company = 7;
+    string position = 8;
+    string description = 9;
+    Rating rating = 10;
+}
+message UpdateRespondent {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
     string sber_id = 5;
     string photo = 6;
     string company = 7;
@@ -41,4 +67,9 @@ message UpdateRespondentRating {
     float communication = 2;
     float experience = 3;
     float punctuality = 4;
+}
+
+message UpdateRespondentInnRequest {
+    string respondent_id = 1;
+    string inn = 2;
 }

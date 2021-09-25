@@ -25,6 +25,7 @@ func createCompany(t *testing.T) *pb.Company {
 	return company
 }
 
+
 func deleteCompany(t *testing.T, id string) {
 	err := strg.Company().Delete(id)
 
