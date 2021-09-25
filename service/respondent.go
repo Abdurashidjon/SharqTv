@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	pb "bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/helper"
@@ -24,7 +25,7 @@ func NewRespondentService(db *sqlx.DB, log logger.Logger) *respondentService {
 	}
 }
 
-func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb.RespondentId, error) {
+func (s *respondentService) Create(ctx context.Context, req *pb.CreateRespondent) (*pb.RespondentId, error) {
 	// TODO - validate inn
 	// if !util.IsValidPhone(req.Phone) {
 	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -33,7 +34,9 @@ func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb
 	// if !util.IsValidEmail(req.Email) {
 	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
 	// }
+	fmt.Println("1")
 	id, err := s.storage.Respondent().Create(req)
+	fmt.Println("2")
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while creating new respondent", req, codes.Internal)
 	}
@@ -43,7 +46,7 @@ func (s *respondentService) Create(ctx context.Context, req *pb.Respondent) (*pb
 	}, nil
 }
 
-func (s *respondentService) Update(ctx context.Context, req *pb.Respondent) (*pb.RespondentId, error) {
+func (s *respondentService) Update(ctx context.Context, req *pb.UpdateRespondent) (*pb.RespondentId, error) {
 	// TODO - validate inn
 	// if !util.IsValidPhone(req.Phone) {
 	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -102,6 +105,15 @@ func (s *respondentService) UpdateRating(ctx context.Context, req *pb.UpdateResp
 	err := s.storage.Respondent().UpdateRating(req)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while updating respondent rating", req, codes.Internal)
+	}
+
+	return &emptypb.Empty{}, nil
+}
+
+func (s *respondentService) UpdateRespondentInn(ctx context.Context, req *pb.UpdateRespondentInnRequest) (*emptypb.Empty, error) {
+	err := s.storage.Respondent().UpdateRespondentInn(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while updating respondent inn", req, codes.Internal)
 	}
 
 	return &emptypb.Empty{}, nil

@@ -18,7 +18,7 @@ func NewRespondentRepo(db *sqlx.DB) repo.RespondentRepoI {
 	return &respondentRepo{db: db}
 }
 
-func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
+func (r *respondentRepo) Create(respondent *pb.CreateRespondent) (string, error) {
 	query := `INSERT INTO respondent(
                             id,
                             name,
@@ -27,13 +27,9 @@ func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
                             sber_id,
                             company,
                             position,
-                            description,
-							rating_communication,
-							rating_experience,
-							rating_punctuality
+                            description
 							)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) `
-
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) `
 	_, err := r.db.Exec(
 		query,
 		respondent.Id,
@@ -44,15 +40,15 @@ func (r *respondentRepo) Create(respondent *pb.Respondent) (string, error) {
 		respondent.Company,
 		respondent.Position,
 		respondent.Description,
-		respondent.Rating.Communication,
-		respondent.Rating.Experience,
-		respondent.Rating.Punctuality,
 	)
 
+	if err != nil {
+		return "", err
+	}
 	return respondent.Id, err
 }
 
-func (r *respondentRepo) Update(respondent *pb.Respondent) (string, error) {
+func (r *respondentRepo) Update(respondent *pb.UpdateRespondent) (string, error) {
 	query := `UPDATE respondent 
                     SET
                         name = $1,
@@ -76,6 +72,9 @@ func (r *respondentRepo) Update(respondent *pb.Respondent) (string, error) {
 		respondent.Description,
 		respondent.Id,
 	)
+	if err != nil {
+		return "", err
+	}
 
 	return respondent.Id, err
 }
@@ -89,6 +88,7 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
                     email,
                     phone,
                     sber_id,
+					inn,
                     company,
                     position,
                     description,
@@ -106,6 +106,7 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
 		&respondent.Email,
 		&respondent.Phone,
 		&respondent.SberId,
+		&respondent.Inn,
 		&respondent.Company,
 		&respondent.Position,
 		&respondent.Description,
@@ -167,6 +168,7 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
                     email,
                     phone,
                     sber_id,
+					inn,
                     company,
                     position,
                     description,
@@ -190,6 +192,7 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
 			&respondent.Email,
 			&respondent.Phone,
 			&respondent.SberId,
+			&respondent.Inn,
 			&respondent.Company,
 			&respondent.Position,
 			&respondent.Description,
@@ -247,6 +250,20 @@ func (r *respondentRepo) UpdateRating(rating *pb.UpdateRespondentRating) error {
 		rating.Experience,
 		rating.Punctuality,
 		rating.UserId,
+	)
+	return err
+}
+
+func (r *respondentRepo) UpdateRespondentInn(req *pb.UpdateRespondentInnRequest) error {
+	query := `UPDATE respondent
+				SET
+					inn = $1
+				WHERE 
+					id = $2`
+	_, err := r.db.Exec(
+		query,
+		req.Inn,
+		req.RespondentId,
 	)
 	return err
 }

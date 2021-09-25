@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createRespondent(t *testing.T) *pb.Respondent {
+func createRespondent(t *testing.T) *pb.CreateRespondent {
 	company := createCompany(t)
-	respondent := &pb.Respondent{
+	respondent := &pb.CreateRespondent{
 		Id:      createRandomId(t),
 		Name:    fakeData.Name(),
 		Email:   fakeData.Email(),
@@ -18,6 +18,24 @@ func createRespondent(t *testing.T) *pb.Respondent {
 	}
 
 	res, err := strg.Respondent().Create(respondent)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, res)
+
+	return respondent
+}
+
+func updateRespondent(t *testing.T) *pb.UpdateRespondent {
+	company := createCompany(t)
+	respondent := &pb.UpdateRespondent{
+		Id:      createRandomId(t),
+		Name:    fakeData.Name(),
+		Email:   fakeData.Email(),
+		Phone:   fakeData.PhoneNumber(),
+		Company: company.Id,
+	}
+
+	res, err := strg.Respondent().Update(respondent)
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, res)
@@ -37,7 +55,7 @@ func TestCreateRespondent(t *testing.T) {
 }
 
 func TestUpdateRespondent(t *testing.T) {
-	respondent := createRespondent(t)
+	respondent := updateRespondent(t)
 
 	respondent.Name = fakeData.Name()
 	respondent.Phone = fakeData.PhoneNumber()
