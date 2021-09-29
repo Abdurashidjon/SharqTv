@@ -272,23 +272,9 @@ func (r *respondentRepo) UpdateRespondentInn(req *pb.UpdateRespondentInnRequest)
 func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (*pb.GetAllRespondentResponse, error) {
 	var (
 		filter      string
-		count       int32
 		respondents []*pb.Respondent
 		args        = make(map[string]interface{})
 	)
-
-	countQuery := `SELECT count(1) FROM respondent WHERE deleted_at = 0 AND ` + filter
-	rows, err := r.db.NamedQuery(countQuery, args)
-	if err != nil {
-		return nil, err
-	}
-
-	for rows.Next() {
-		err = rows.Scan(&count)
-		if err != nil {
-			return nil, err
-		}
-	}
 	args["ids"] = pq.Array(req.Ids)
 
 	filter += " ORDER BY created_at DESC LIMIT :limit OFFSET :offset "
@@ -311,7 +297,7 @@ func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (
 					rating_punctuality
                 FROM respondent 
                 WHERE deleted_at = 0 AND id = ANY (:ids) %s`
-	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
+	rows, err := r.db.NamedQuery(fmt.Sprintf(query, filter), args)
 	if err != nil {
 		return nil, err
 	}
@@ -344,6 +330,5 @@ func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (
 
 	return &pb.GetAllRespondentResponse{
 		Respondents: respondents,
-		Count:       count,
 	}, nil
 }
