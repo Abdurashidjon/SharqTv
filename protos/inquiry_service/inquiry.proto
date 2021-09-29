@@ -70,5 +70,56 @@ message GetAllInquiryResponse {
     int32 count = 2;
 }
 
+message InquiryTimeTableModel {
+    string id = 1;
+    string inquiry_id = 2;
+    string dates = 3;
+    string start_time = 4;
+    string end_time = 5;
+    int32 number_of_partisipants = 6;
+    int32 number_of_applicants = 7;
+}
+message TimeTableWithTitle {
+    string id = 1;
+    string inquiry_id = 2;
+    string dates = 3;
+    string start_time = 4;
+    string end_time = 5;
+    int32 number_of_partisipants = 6;
+    int32 number_of_applicants = 7;
+    string title = 8;
+}
 
-//git checking
+message InquiryTimeTableId {
+    string id = 1;
+}
+
+message GetCalendarResponse {
+    repeated TimeTableWithTitle timetables = 1;
+    int32 count = 2;
+}
+
+message GetInquiryTimeTablesResponse{
+    repeated InquiryTimeTableModel timetables = 1;
+    int32 count = 2;
+}
+
+message GetInquiryTimeTablesRequest {
+    string inquiry_id = 1;
+    int32 offset = 2;
+    int32 limit = 3;
+}
+
+message GetCalendarRequest {
+    string company_id = 1;
+    string researcher_id = 2;
+    string from_date = 3;
+    string to_date = 4;
+    int32 offset = 5;
+    int32 limit = 6;
+}
+
+message DeleteInquiryTimeTableRequest {
+    string inquiry_id = 1;
+    string inquiry_timetable_id = 2;
+}

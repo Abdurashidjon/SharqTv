@@ -7,6 +7,7 @@ import (
 
 	"bitbucket.org/udevs/ur_go_user_service/storage/repo"
 	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 )
 
 type respondentRepo struct {
@@ -266,4 +267,83 @@ func (r *respondentRepo) UpdateRespondentInn(req *pb.UpdateRespondentInnRequest)
 		req.RespondentId,
 	)
 	return err
+}
+
+func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (*pb.GetAllRespondentResponse, error) {
+	var (
+		filter      string
+		count       int32
+		respondents []*pb.Respondent
+		args        = make(map[string]interface{})
+	)
+
+	countQuery := `SELECT count(1) FROM respondent WHERE deleted_at = 0 AND ` + filter
+	rows, err := r.db.NamedQuery(countQuery, args)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		err = rows.Scan(&count)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["ids"] = pq.Array(req.Ids)
+
+	filter += " ORDER BY created_at DESC LIMIT :limit OFFSET :offset "
+	args["limit"] = req.Limit
+	args["offset"] = req.Offset
+
+	query := `SELECT
+                    id,
+                    name,
+                    email,
+                    phone,
+                    sber_id,
+					inn,
+                    company,
+                    position,
+                    description,
+                    photo,
+					rating_communication,
+					rating_experience,
+					rating_punctuality
+                FROM respondent 
+                WHERE deleted_at = 0 AND id = ANY (:ids) %s`
+	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var respondent pb.Respondent
+		var rating pb.Rating
+		err = rows.Scan(
+			&respondent.Id,
+			&respondent.Name,
+			&respondent.Email,
+			&respondent.Phone,
+			&respondent.SberId,
+			&respondent.Inn,
+			&respondent.Company,
+			&respondent.Position,
+			&respondent.Description,
+			&respondent.Photo,
+			&rating.Communication,
+			&rating.Experience,
+			&rating.Punctuality,
+		)
+		if err != nil {
+			return nil, err
+		}
+		respondent.Rating = &rating
+
+		respondents = append(respondents, &respondent)
+	}
+
+	return &pb.GetAllRespondentResponse{
+		Respondents: respondents,
+		Count:       count,
+	}, nil
 }

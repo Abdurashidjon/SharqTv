@@ -11,4 +11,5 @@ type RespondentRepoI interface {
 	UpdatePhoto(user_id, photo string) error
 	UpdateRating(rating *pb.UpdateRespondentRating) error
 	UpdateRespondentInn(req *pb.UpdateRespondentInnRequest) error
+	GetRespondentsById(req *pb.GetRespondentsByIdRequest) (*pb.GetAllRespondentResponse, error)
 }

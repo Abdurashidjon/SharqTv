@@ -13,6 +13,12 @@ service InquiryService {
     rpc GetAll(GetAllInquiryRequest) returns (GetAllInquiryResponse) {}
     rpc Delete(InquiryId) returns (google.protobuf.Empty) {}
     rpc UpdateStatus(StatusNotes) returns (google.protobuf.Empty) {}
+    rpc AddInquiryTimeTable(InquiryTimeTableModel) returns (InquiryTimeTableId) {}
+	rpc GetInquiryTimeTable(InquiryTimeTableId) returns (InquiryTimeTableModel) {}
+	rpc UpdateInquiryTimeTable(InquiryTimeTableId) returns (google.protobuf.Empty) {}
+    rpc GetInquiryTimeTables(GetInquiryTimeTablesRequest) returns (GetInquiryTimeTablesResponse) {}
+    rpc GetCalendar(GetCalendarRequest) returns (GetCalendarResponse) {}
+    rpc DeleteInquiryTimeTable(DeleteInquiryTimeTableRequest) returns (google.protobuf.Empty) {}
 }
 
 message GetAllInquiryRequest {
@@ -23,3 +29,4 @@ message GetAllInquiryRequest {
     string researcher_id = 5;
     string company_id = 6;
 }
+
