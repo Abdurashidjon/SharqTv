@@ -25,7 +25,7 @@ func NewRespondentService(db *sqlx.DB, log logger.Logger) *respondentService {
 	}
 }
 
-func (s *respondentService) Create(ctx context.Context, req *pb.CreateRespondent) (*pb.RespondentId, error) {
+func (s *respondentService) Create(ctx context.Context, req *pb.CreateRespondent) (*pb.RespondentID, error) {
 	// TODO - validate inn
 	// if !util.IsValidPhone(req.Phone) {
 	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -41,12 +41,12 @@ func (s *respondentService) Create(ctx context.Context, req *pb.CreateRespondent
 		return nil, helper.HandleError(s.logger, err, "error while creating new respondent", req, codes.Internal)
 	}
 
-	return &pb.RespondentId{
+	return &pb.RespondentID{
 		Id: id,
 	}, nil
 }
 
-func (s *respondentService) Update(ctx context.Context, req *pb.UpdateRespondent) (*pb.RespondentId, error) {
+func (s *respondentService) Update(ctx context.Context, req *pb.UpdateRespondent) (*pb.RespondentID, error) {
 	// TODO - validate inn
 	// if !util.IsValidPhone(req.Phone) {
 	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid phone number"), "Invalid phone number", req, codes.Canceled)
@@ -60,12 +60,12 @@ func (s *respondentService) Update(ctx context.Context, req *pb.UpdateRespondent
 		return nil, helper.HandleError(s.logger, err, "error while updating new respondent", req, codes.Internal)
 	}
 
-	return &pb.RespondentId{
+	return &pb.RespondentID{
 		Id: id,
 	}, nil
 }
 
-func (s *respondentService) Get(ctx context.Context, req *pb.RespondentId) (*pb.Respondent, error) {
+func (s *respondentService) Get(ctx context.Context, req *pb.RespondentID) (*pb.Respondent, error) {
 	respondent, err := s.storage.Respondent().Get(req.Id)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting respondent", req, codes.Internal)
@@ -75,15 +75,15 @@ func (s *respondentService) Get(ctx context.Context, req *pb.RespondentId) (*pb.
 }
 
 func (s *respondentService) GetAll(ctx context.Context, req *pb.GetAllRespondentRequest) (*pb.GetAllRespondentResponse, error) {
-	companies, err := s.storage.Respondent().GetAll(req)
+	respondents, err := s.storage.Respondent().GetAll(req)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting all respondents", req, codes.Internal)
 	}
 
-	return companies, nil
+	return respondents, nil
 }
 
-func (s *respondentService) Delete(ctx context.Context, req *pb.RespondentId) (*emptypb.Empty, error) {
+func (s *respondentService) Delete(ctx context.Context, req *pb.RespondentID) (*emptypb.Empty, error) {
 	err := s.storage.Respondent().Delete(req.Id)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while getting respondent", req, codes.Internal)
@@ -117,4 +117,13 @@ func (s *respondentService) UpdateRespondentInn(ctx context.Context, req *pb.Upd
 	}
 
 	return &emptypb.Empty{}, nil
+}
+
+func (s *respondentService) GetRespondentsById(ctx context.Context, req *pb.GetRespondentsByIdRequest) (*pb.GetAllRespondentResponse, error) {
+	respondents, err := s.storage.Respondent().GetRespondentsById(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while getting respondents by id", req, codes.Internal)
+	}
+
+	return respondents, nil
 }

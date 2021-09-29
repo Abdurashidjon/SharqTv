@@ -47,7 +47,7 @@ message GetAllRespondentResponse {
     int32 count = 2;
 }
 
-message RespondentId {
+message RespondentID {
     string id = 1;
 }
 
@@ -72,4 +72,10 @@ message UpdateRespondentRating {
 message UpdateRespondentInnRequest {
     string respondent_id = 1;
     string inn = 2;
+}
+
+message GetRespondentsByIdRequest {
+    repeated string ids = 1;
+    int32 offset = 2;
+    int32 limit = 3;
 }
