@@ -266,6 +266,8 @@ func (r *respondentRepo) UpdateRespondentInn(req *pb.UpdateRespondentInnRequest)
 		req.Inn,
 		req.RespondentId,
 	)
+
+	fmt.Println("respondent inn" + req.Inn)
 	return err
 }
 

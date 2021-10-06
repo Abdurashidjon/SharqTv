@@ -71,17 +71,22 @@ func (r *researcherRepo) Update(researcher *pb.Researcher) (string, error) {
 
 func (r *researcherRepo) Get(id string) (*pb.Researcher, error) {
 	var researcher pb.Researcher
+	var company_name pb.CompanyName
+
 	query := `SELECT 
-                    id,
-                    name,
-                    email,
-                    phone,
-                    profession_title,
-                    role_id,
-                    company_id,
-					photo
-                FROM researcher
-                WHERE deleted_at = 0 AND id = $1 `
+                    r.id,
+                    r.name,
+                    r.email,
+                    r.phone,
+                    r.profession_title,
+                    r.role_id,
+                    r.company_id,
+					r.photo,
+					c.id,
+					c.name
+                FROM researcher r
+				JOIN company c ON c.id = r.company_id
+                WHERE r.deleted_at = 0 AND r.id = $1 `
 
 	row := r.db.QueryRow(query, id)
 	err := row.Scan(
@@ -93,11 +98,14 @@ func (r *researcherRepo) Get(id string) (*pb.Researcher, error) {
 		&researcher.RoleId,
 		&researcher.CompanyId,
 		&researcher.Photo,
+		&company_name.Id,
+		&company_name.Name,
 	)
 	if err != nil {
 		return nil, err
 	}
 
+	researcher.CompanyName = &company_name
 	return &researcher, nil
 }
 
@@ -128,7 +136,9 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 		args["phone"] = req.Phone
 	}
 
-	countQuery := `SELECT count(1) FROM researcher WHERE deleted_at = 0 %s`
+	countQuery := `SELECT count(1) FROM researcher r
+	JOIN company c ON c.id = r.company_id
+	WHERE r.deleted_at = 0 %s`
 	rows, err := r.db.NamedQuery(fmt.Sprintf(countQuery, filter), args)
 	if err != nil {
 		return nil, err
@@ -141,21 +151,24 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 		}
 	}
 
-	filter += " ORDER BY created_at DESC LIMIT :limit OFFSET :offset "
+	filter += " ORDER BY r.created_at DESC LIMIT :limit OFFSET :offset "
 	args["limit"] = req.Limit
 	args["offset"] = req.Offset
 
-	query := `SELECT
-                    id,
-                    name,
-                    email,
-                    phone,
-                    profession_title,
-                    role_id,
-                    company_id,
-					photo
-                FROM researcher 
-                WHERE deleted_at = 0 %s`
+	query := `SELECT 
+                    r.id,
+                    r.name,
+                    r.email,
+                    r.phone,
+                    r.profession_title,
+                    r.role_id,
+                    r.company_id,
+					r.photo,
+					c.id,
+					c.name
+                FROM researcher r
+				JOIN company c ON c.id = r.company_id
+                WHERE r.deleted_at = 0%s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
 	if err != nil {
 		return nil, err
@@ -163,6 +176,7 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 
 	for rows.Next() {
 		var researcher pb.Researcher
+		var company_name pb.CompanyName
 		err = rows.Scan(
 			&researcher.Id,
 			&researcher.Name,
@@ -172,11 +186,14 @@ func (r *researcherRepo) GetAll(req *pb.GetAllResearcherRequest) (*pb.GetAllRese
 			&researcher.RoleId,
 			&researcher.CompanyId,
 			&researcher.Photo,
+			&company_name.Id,
+			&company_name.Name,
 		)
 		if err != nil {
 			return nil, err
 		}
 
+		researcher.CompanyName = &company_name
 		researchers = append(researchers, &researcher)
 	}
 
