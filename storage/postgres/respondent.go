@@ -28,9 +28,10 @@ func (r *respondentRepo) Create(respondent *pb.CreateRespondent) (string, error)
                             sber_id,
                             company,
                             position,
-                            description
+                            description,
+							account_number
 							)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) `
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) `
 	_, err := r.db.Exec(
 		query,
 		respondent.Id,
@@ -41,6 +42,7 @@ func (r *respondentRepo) Create(respondent *pb.CreateRespondent) (string, error)
 		respondent.Company,
 		respondent.Position,
 		respondent.Description,
+		respondent.AccountNumber,
 	)
 
 	if err != nil {
@@ -94,6 +96,7 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
                     position,
                     description,
                     photo,
+					account_number,
 					rating_communication,
 					rating_experience,
 					rating_punctuality
@@ -112,6 +115,7 @@ func (r *respondentRepo) Get(id string) (*pb.Respondent, error) {
 		&respondent.Position,
 		&respondent.Description,
 		&respondent.Photo,
+		&respondent.AccountNumber,
 		&rating.Communication,
 		&rating.Experience,
 		&rating.Punctuality,
@@ -174,6 +178,7 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
                     position,
                     description,
                     photo,
+					account_number,
 					rating_communication,
 					rating_experience,
 					rating_punctuality
@@ -198,6 +203,7 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
 			&respondent.Position,
 			&respondent.Description,
 			&respondent.Photo,
+			&respondent.AccountNumber,
 			&rating.Communication,
 			&rating.Experience,
 			&rating.Punctuality,
@@ -294,6 +300,7 @@ func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (
                     position,
                     description,
                     photo,
+					account_number,
 					rating_communication,
 					rating_experience,
 					rating_punctuality
@@ -318,6 +325,7 @@ func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (
 			&respondent.Position,
 			&respondent.Description,
 			&respondent.Photo,
+			&respondent.AccountNumber,
 			&rating.Communication,
 			&rating.Experience,
 			&rating.Punctuality,

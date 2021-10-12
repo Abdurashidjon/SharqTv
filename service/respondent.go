@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 
+	pbb "bitbucket.org/udevs/ur_go_user_service/genproto/billing_service"
 	pb "bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/helper"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/logger"
+	grpc_client "bitbucket.org/udevs/ur_go_user_service/service/grpc_clients"
 	"bitbucket.org/udevs/ur_go_user_service/storage"
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/grpc/codes"
@@ -16,12 +18,14 @@ import (
 type respondentService struct {
 	logger  logger.Logger
 	storage storage.StorageI
+	client  *grpc_client.GrpcClients
 }
 
-func NewRespondentService(db *sqlx.DB, log logger.Logger) *respondentService {
+func NewRespondentService(db *sqlx.DB, log logger.Logger, transaction *grpc_client.GrpcClients) *respondentService {
 	return &respondentService{
 		logger:  log,
 		storage: storage.NewStoragePg(db),
+		client:  transaction,
 	}
 }
 
@@ -34,6 +38,24 @@ func (s *respondentService) Create(ctx context.Context, req *pb.CreateRespondent
 	// if !util.IsValidEmail(req.Email) {
 	// 	return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
 	// }
+	account_number, err := s.client.AccountService().Create(
+		context.Background(),
+		&pbb.CreateAccountReq{
+			Accounts: []*pbb.CreateAccount{
+				{
+					UserId:        req.Id,
+					Name:          req.Name,
+					AccountTypeId: "respondent",
+				},
+			},
+		},
+	)
+
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while creating account", req, codes.Internal)
+	}
+
+	req.AccountNumber = account_number.AccountNumber
 	fmt.Println("1")
 	id, err := s.storage.Respondent().Create(req)
 	fmt.Println("2")

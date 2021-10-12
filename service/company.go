@@ -3,11 +3,14 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 
+	pbb "bitbucket.org/udevs/ur_go_user_service/genproto/billing_service"
 	pb "bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/helper"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/logger"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/util"
+	grpc_client "bitbucket.org/udevs/ur_go_user_service/service/grpc_clients"
 	"bitbucket.org/udevs/ur_go_user_service/storage"
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/grpc/codes"
@@ -17,12 +20,14 @@ import (
 type companyService struct {
 	logger  logger.Logger
 	storage storage.StorageI
+	client  *grpc_client.GrpcClients
 }
 
-func NewCompanyService(db *sqlx.DB, log logger.Logger) *companyService {
+func NewCompanyService(db *sqlx.DB, log logger.Logger, transaction *grpc_client.GrpcClients) *companyService {
 	return &companyService{
 		logger:  log,
 		storage: storage.NewStoragePg(db),
+		client:  transaction,
 	}
 }
 
@@ -35,6 +40,26 @@ func (s *companyService) Create(ctx context.Context, req *pb.Company) (*pb.Compa
 	if !util.IsValidEmail(req.Email) {
 		return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
 	}
+
+	account_number, err := s.client.AccountService().Create(
+		context.Background(),
+		&pbb.CreateAccountReq{
+			Accounts: []*pbb.CreateAccount{
+				{
+					UserId:        req.Id,
+					Name:          req.Name,
+					AccountTypeId: "company",
+				},
+			},
+		},
+	)
+
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while creating account", req, codes.Internal)
+	}
+
+	req.AccountNumber = account_number.AccountNumber
+	fmt.Println(account_number.AccountNumber)
 	id, err := s.storage.Company().Create(req)
 	if err != nil {
 		return nil, helper.HandleError(s.logger, err, "error while creating new company", req, codes.Internal)
