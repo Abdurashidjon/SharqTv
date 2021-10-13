@@ -19,6 +19,9 @@ type Config struct {
 	PostgresDB       string
 	LogLevel         string
 
+	BillingServiceHost string
+	BillingServicePort int
+
 	RPCPort string
 
 	PasscodePool   string
@@ -36,6 +39,9 @@ func Load() Config {
 	c.PostgresDB = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "user_service"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "qwerty"))
+
+	c.BillingServiceHost = cast.ToString(getOrReturnDefault("BILLING_SERVICE_HOST", "localhost"))
+	c.BillingServicePort = cast.ToInt(getOrReturnDefault("BILLING_SERVICE_PORT", 5004))
 
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
 	c.RPCPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":5002"))

@@ -16,6 +16,9 @@ service RespondentInquiryService {
     rpc UpdateRespondentRating (UpdateRatingRequest) returns (google.protobuf.Empty) {}
     rpc GetInquiryByRespondent (GetInquiryByRespondentRequest) returns (GetAllInquiryResponse) {}
     rpc GetRespondentsByInquiry (GetRespondentsByInquiryRequest) returns (GetRespondentsByInquiryResponse) {}
+    rpc UpdateRespondentInquiryTimeTable (UpdateRespondentInquiryTimeTableRequest) returns (google.protobuf.Empty) {}
+    rpc UpdateRespondentInquiryStatus(UpdateStatusRespondentInquiryRequest) returns (google.protobuf.Empty) {}
+    rpc GetRespondentCalendar(GetRespondentCalendarRequest) returns (GetCalendarResponse) {} 
 }
 
 message GetAllRespondentInquiryRequest {
@@ -24,3 +27,21 @@ message GetAllRespondentInquiryRequest {
     string inquiry_id = 3;
     string status_id = 4;
 }
+
+message UpdateRespondentInquiryTimeTableRequest {
+    string respondent_id = 1;
+    string timetable_id = 2;
+}
+
+message UpdateStatusRespondentInquiryRequest {
+    string respondent_id = 1;
+    string inquiry_id = 2;
+    string status_id = 3;
+}
+
+message GetRespondentCalendarRequest {
+    string respondent_id = 1;
+    string from_date = 2;
+    string to_date = 3;
+}
+

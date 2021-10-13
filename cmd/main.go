@@ -8,6 +8,7 @@ import (
 	"bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
 	"bitbucket.org/udevs/ur_go_user_service/pkg/logger"
 	"bitbucket.org/udevs/ur_go_user_service/service"
+	grpc_client "bitbucket.org/udevs/ur_go_user_service/service/grpc_clients"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
@@ -34,6 +35,11 @@ func main() {
 		log.Error("error while connecting database", logger.Error(err))
 		return
 	}
+	client, err := grpc_client.NewGrpcClients(&cfg)
+	if err != nil {
+		log.Error("error while connecting to clients", logger.Error(err))
+		return
+	}
 
 	lis, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {
@@ -41,8 +47,8 @@ func main() {
 		return
 	}
 
-	companyService := service.NewCompanyService(db, log)
-	respondentService := service.NewRespondentService(db, log)
+	companyService := service.NewCompanyService(db, log, client)
+	respondentService := service.NewRespondentService(db, log, client)
 	researcherService := service.NewResearcherService(db, log)
 
 	s := grpc.NewServer()

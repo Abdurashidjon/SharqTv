@@ -15,6 +15,7 @@ message Respondent {
     string position = 9;
     string description = 10;
     Rating rating = 11;
+    int32 account_number = 12;
 }
 
 message CreateRespondent {
@@ -28,6 +29,7 @@ message CreateRespondent {
     string position = 8;
     string description = 9;
     Rating rating = 10;
+    int32 account_number = 11;
 }
 message UpdateRespondent {
     string id = 1;

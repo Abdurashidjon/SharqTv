@@ -10,6 +10,7 @@ message Company {
     string owner_name = 4;
     string email = 5;
     string phone = 6;
+    int32 account_number = 7;
 }
 
 message CompanyId {

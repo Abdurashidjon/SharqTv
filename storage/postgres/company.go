@@ -24,8 +24,10 @@ func (r *companyRepo) Create(company *pb.Company) (string, error) {
                             inn,
                             owner_name,
                             email,
-                            phone)
-                        VALUES ($1, $2, $3, $4, $5, $6) `
+                            phone,
+							account_number
+						)
+                        VALUES ($1, $2, $3, $4, $5, $6, $7) `
 
 	_, err := r.db.Exec(
 		query,
@@ -35,6 +37,7 @@ func (r *companyRepo) Create(company *pb.Company) (string, error) {
 		company.OwnerName,
 		company.Email,
 		company.Phone,
+		company.AccountNumber,
 	)
 
 	return company.Id, err
@@ -75,7 +78,8 @@ func (r *companyRepo) Get(id string) (*pb.Company, error) {
                     inn,
                     owner_name,
                     email,
-                    phone
+                    phone,
+					account_number
                 FROM company
                 WHERE deleted_at = 0 AND id = $1 `
 
@@ -87,6 +91,7 @@ func (r *companyRepo) Get(id string) (*pb.Company, error) {
 		&company.OwnerName,
 		&company.Email,
 		&company.Phone,
+		&company.AccountNumber,
 	)
 	if err != nil {
 		return nil, err
@@ -136,7 +141,8 @@ func (r *companyRepo) GetAll(req *pb.GetAllCompanyRequest) (*pb.GetAllCompanyRes
                     inn,
                     owner_name,
                     email,
-                    phone
+                    phone,
+					account_number
                 FROM company 
                 WHERE deleted_at = 0 %s`
 	rows, err = r.db.NamedQuery(fmt.Sprintf(query, filter), args)
@@ -153,6 +159,7 @@ func (r *companyRepo) GetAll(req *pb.GetAllCompanyRequest) (*pb.GetAllCompanyRes
 			&company.OwnerName,
 			&company.Email,
 			&company.Phone,
+			&company.AccountNumber,
 		)
 		if err != nil {
 			return nil, err
