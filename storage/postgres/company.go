@@ -118,6 +118,13 @@ func (r *companyRepo) GetAll(req *pb.GetAllCompanyRequest) (*pb.GetAllCompanyRes
 		args["inn"] = req.Inn
 	}
 
+	if req.AccountNumber == 1 {
+		filter += " AND account_number = 0 "
+	} else if req.AccountNumber > 0 {
+		filter += " AND account_number = :account_number "
+		args["account_number"] = req.AccountNumber
+	}
+
 	countQuery := `SELECT count(1) FROM company WHERE deleted_at = 0 ` + filter
 	rows, err := r.db.NamedQuery(countQuery, args)
 	if err != nil {
@@ -181,5 +188,15 @@ func (r *companyRepo) Delete(id string) error {
                 WHERE id = $1 AND deleted_at=0 `
 
 	_, err := r.db.Exec(query, id)
+	return err
+}
+
+func (r *companyRepo) UpdateAccountNumber(req *pb.Company) error {
+	query := `UPDATE company
+				SET
+					account_number = $1
+				WHERE id = $2`
+
+	_, err := r.db.Exec(query, req.AccountNumber, req.Id)
 	return err
 }

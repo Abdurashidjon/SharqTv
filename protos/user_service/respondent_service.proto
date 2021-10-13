@@ -16,6 +16,7 @@ service RespondentService {
     rpc UpdateRating(UpdateRespondentRating) returns (google.protobuf.Empty) {}
     rpc UpdateRespondentInn(UpdateRespondentInnRequest) returns (google.protobuf.Empty) {}
     rpc GetRespondentsById(GetRespondentsByIdRequest) returns (GetAllRespondentResponse) {}
+    rpc UpdateAccountNumber(CreateRespondent) returns (google.protobuf.Empty) {}
 }
 
 message GetAllRespondentRequest {
@@ -24,4 +25,5 @@ message GetAllRespondentRequest {
     string name = 3;
     string email = 4;
     string phone = 5;
+    int32 account_number = 6;
 }

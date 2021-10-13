@@ -12,4 +12,5 @@ type RespondentRepoI interface {
 	UpdateRating(rating *pb.UpdateRespondentRating) error
 	UpdateRespondentInn(req *pb.UpdateRespondentInnRequest) error
 	GetRespondentsById(req *pb.GetRespondentsByIdRequest) (*pb.GetAllRespondentResponse, error)
+	UpdateAccountNumber(req *pb.CreateRespondent) error
 }

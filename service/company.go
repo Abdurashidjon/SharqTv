@@ -115,3 +115,12 @@ func (s *companyService) Delete(ctx context.Context, req *pb.CompanyId) (*emptyp
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *companyService) UpdateAccountNumber(ctx context.Context, req *pb.Company) (*emptypb.Empty, error) {
+	err := s.storage.Company().UpdateAccountNumber(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while updating company account number", req, codes.Internal)
+	}
+
+	return &emptypb.Empty{}, nil
+}
