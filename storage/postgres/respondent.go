@@ -351,7 +351,7 @@ func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (
 }
 
 func (r *respondentRepo) UpdateAccountNumber(req *pb.CreateRespondent) error {
-	query := `UPDATE company
+	query := `UPDATE respondent
 				SET
 					account_number = $1
 				WHERE id = $2`

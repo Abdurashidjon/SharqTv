@@ -12,6 +12,7 @@ message Transaction {
     string currency = 6;
     double debit = 7;
     double credit = 8;
+    string created_at = 9;
 }
 
 message CreateTransaction {

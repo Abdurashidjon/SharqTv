@@ -3,8 +3,6 @@ syntax = "proto3";
 package genproto;
 option go_package = "genproto/inquiry_service";
 
-
-
 message RespondentInquiry {
     string id = 1;
     string respondent_id = 2;
@@ -14,6 +12,7 @@ message RespondentInquiry {
     string note = 6;
     RespondentRating rating = 7;
     string status_id = 8;
+    int32 account_number = 9;
 }
 message CreateRespondentInquiry {
     string respondent_id = 1;
@@ -23,7 +22,9 @@ message CreateRespondentInquiry {
     string note = 5;
     RespondentRating rating = 6;
     string status_id = 7;
+    int32 account_number = 8;
 }
+
 message RespondentInquiryId {
     string id = 1;
 }
@@ -50,6 +51,7 @@ message UpdateRatingRequest {
 message RespondentId {
     string respondent_id = 1;
     string status_id = 2;
+    int32 account_number = 3;
 }
 
 message GetRespondentsByInquiryRequest {
