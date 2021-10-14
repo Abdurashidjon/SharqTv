@@ -150,6 +150,13 @@ func (r *respondentRepo) GetAll(req *pb.GetAllRespondentRequest) (*pb.GetAllResp
 		args["phone"] = req.Phone
 	}
 
+	if req.AccountNumber == 1 {
+		filter += " AND account_number = 0 "
+	} else if req.AccountNumber > 0 {
+		filter += " AND account_number = :account_number "
+		args["account_number"] = req.AccountNumber
+	}
+
 	countQuery := `SELECT count(1) FROM respondent WHERE deleted_at = 0 ` + filter
 	rows, err := r.db.NamedQuery(countQuery, args)
 	if err != nil {
@@ -341,4 +348,14 @@ func (r *respondentRepo) GetRespondentsById(req *pb.GetRespondentsByIdRequest) (
 	return &pb.GetAllRespondentResponse{
 		Respondents: respondents,
 	}, nil
+}
+
+func (r *respondentRepo) UpdateAccountNumber(req *pb.CreateRespondent) error {
+	query := `UPDATE company
+				SET
+					account_number = $1
+				WHERE id = $2`
+
+	_, err := r.db.Exec(query, req.AccountNumber, req.Id)
+	return err
 }
