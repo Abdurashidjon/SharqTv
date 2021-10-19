@@ -124,3 +124,12 @@ func (s *companyService) UpdateAccountNumber(ctx context.Context, req *pb.Compan
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *companyService) CompanyReport(ctx context.Context, req *pb.CompanyReportReq) (*pb.CompanyReportResp, error) {
+	companies, err := s.storage.Company().CompanyReport(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while getting company report", req, codes.Internal)
+	}
+
+	return companies, nil
+}

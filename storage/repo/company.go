@@ -9,4 +9,5 @@ type CompanyRepoI interface {
 	GetAll(req *pb.GetAllCompanyRequest) (*pb.GetAllCompanyResponse, error)
 	Delete(id string) error
 	UpdateAccountNumber(req *pb.Company) error
+	CompanyReport(req *pb.CompanyReportReq) (*pb.CompanyReportResp, error)
 }
