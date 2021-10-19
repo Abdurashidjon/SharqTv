@@ -133,3 +133,12 @@ func (s *companyService) CompanyReport(ctx context.Context, req *pb.CompanyRepor
 
 	return companies, nil
 }
+
+func (s *companyService) GetCompanyByAccountNumber(ctx context.Context, req *pb.CompanyAccountNumber) (*pb.Company, error) {
+	company, err := s.storage.Company().GetCompanyByAccountNumber(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while getting company by account number", req, codes.Internal)
+	}
+
+	return company, nil
+}

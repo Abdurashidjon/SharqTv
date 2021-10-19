@@ -13,6 +13,7 @@ service TransactionService {
     rpc GetAll(GetAllTransactionRequest) returns (GetAllTransactionResponse) {}
     rpc Delete(TransactionId) returns (google.protobuf.Empty) {}
     rpc GetBalance(GetBalanceReq) returns (GetBalanceResp) {}
+    rpc BalanceCompanies(google.protobuf.Empty) returns (GetBalanceResp){}
 }
 
 message GetAllTransactionRequest {

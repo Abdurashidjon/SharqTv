@@ -3,6 +3,7 @@ syntax="proto3";
 package genproto;
 option go_package="genproto/user_service";
 
+
 message Researcher {
     string id = 1;
     string name = 2;
@@ -14,6 +15,7 @@ message Researcher {
     string photo = 8;
     CompanyName company_name = 9; 
 }
+
 
 message GetAllResearcherResponse {
     repeated Researcher researchers = 1;
@@ -33,3 +35,4 @@ message CompanyName {
     string id = 1;
     string name = 2;
 }
+

@@ -240,3 +240,33 @@ func (r *companyRepo) CompanyReport(req *pb.CompanyReportReq) (*pb.CompanyReport
 		Companies: companies,
 	}, nil
 }
+
+func (r *companyRepo) GetCompanyByAccountNumber(req *pb.CompanyAccountNumber) (*pb.Company, error) {
+	var company pb.Company
+	query := `SELECT 
+                    id,
+                    name,
+                    inn,
+                    owner_name,
+                    email,
+                    phone,
+					account_number
+                FROM company
+                WHERE deleted_at = 0 AND account_number = $1 `
+
+	row := r.db.QueryRow(query, req.AccountNumber)
+	err := row.Scan(
+		&company.Id,
+		&company.Name,
+		&company.Inn,
+		&company.OwnerName,
+		&company.Email,
+		&company.Phone,
+		&company.AccountNumber,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &company, nil
+}
