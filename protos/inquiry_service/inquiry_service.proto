@@ -20,6 +20,8 @@ service InquiryService {
     rpc GetCalendar(GetCalendarRequest) returns (GetCalendarResponse) {}
     rpc DeleteInquiryTimeTable(DeleteInquiryTimeTableRequest) returns (google.protobuf.Empty) {}
     rpc UpdateAccountNumbers(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+    rpc GetActiveInquiriesCost(GetActiveInquiriesCostReq) returns (Costs) {}
+    rpc ReportInquiry(ReportReq) returns (ReportResp) {}
 }
 
 message GetAllInquiryRequest {
@@ -29,5 +31,33 @@ message GetAllInquiryRequest {
     string status_id = 4;
     string researcher_id = 5;
     string company_id = 6;
+    string sort = 7;
 }
 
+message ReportResponse{
+    int64 number_of_inquiries = 1;
+    int64 number_of_respondents = 2;
+    double cost = 3;
+    string company_id = 4;
+}
+
+message ReportResp {
+    repeated ReportResponse reports = 1;
+}
+
+message ReportReq {
+    int64 offset = 1;
+    int64 limit = 2;
+}
+
+message Costs {
+    int64 cost = 1;
+}
+
+message GetActiveInquiriesCostResp {
+    repeated Costs costs = 1;
+}
+
+message GetActiveInquiriesCostReq {
+    string company_id = 1;
+}

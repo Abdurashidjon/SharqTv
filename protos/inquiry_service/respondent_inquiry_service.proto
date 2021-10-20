@@ -19,6 +19,19 @@ service RespondentInquiryService {
     rpc UpdateRespondentInquiryTimeTable (UpdateRespondentInquiryTimeTableRequest) returns (google.protobuf.Empty) {}
     rpc UpdateRespondentInquiryStatus(UpdateStatusRespondentInquiryRequest) returns (google.protobuf.Empty) {}
     rpc GetRespondentCalendar(GetRespondentCalendarRequest) returns (GetCalendarResponse) {} 
+    rpc GetInquiry(GetInquiryRequest) returns (GetInquiryResponse) {}
+    rpc GetRespondentInquiryByRespondent(GetInquiryRequest) returns (RespondentInquiry) {}
+}
+
+message GetInquiryRequest {
+    string inquiry_id = 1;
+    string respondent_id = 2;
+}
+
+message GetInquiryResponse {
+    Inquiry inquiry = 1;
+    string updated_at = 2;
+    int32 update = 3;
 }
 
 message GetAllRespondentInquiryRequest {

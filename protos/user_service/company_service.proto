@@ -13,6 +13,12 @@ service CompanyService {
     rpc GetAll(GetAllCompanyRequest) returns (GetAllCompanyResponse) {}
     rpc Delete(CompanyId) returns (google.protobuf.Empty) {}
     rpc UpdateAccountNumber(Company) returns (google.protobuf.Empty) {}
+    rpc CompanyReport(CompanyReportReq) returns (CompanyReportResp) {}
+    rpc GetCompanyByAccountNumber(CompanyAccountNumber) returns (Company) {}
+}
+
+message CompanyAccountNumber {
+    int32 account_number = 1;
 }
 
 message GetAllCompanyRequest {
@@ -21,4 +27,18 @@ message GetAllCompanyRequest {
     string name = 3;
     string inn = 4;
     int32 account_number = 5;
+}
+
+message CompanyReportReq {
+    repeated string companies = 1;
+}
+
+message CompanyReportResponse {
+    string company_id = 1;
+    string company_name = 2;
+    int64 researchers_count = 3;
+}
+
+message CompanyReportResp {
+    repeated CompanyReportResponse companies = 1;
 }

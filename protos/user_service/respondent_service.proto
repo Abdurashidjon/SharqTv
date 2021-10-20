@@ -17,8 +17,12 @@ service RespondentService {
     rpc UpdateRespondentInn(UpdateRespondentInnRequest) returns (google.protobuf.Empty) {}
     rpc GetRespondentsById(GetRespondentsByIdRequest) returns (GetAllRespondentResponse) {}
     rpc UpdateAccountNumber(CreateRespondent) returns (google.protobuf.Empty) {}
+    rpc GetByAccountNumber(RespondentAccountNumber) returns (Respondent) {}
 }
 
+message RespondentAccountNumber {
+    int32 account_number = 1;
+}
 message GetAllRespondentRequest {
     int64 offset = 1;
     int64 limit = 2;

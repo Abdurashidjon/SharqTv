@@ -6,6 +6,7 @@ import (
 	pb "bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
 	"bitbucket.org/udevs/ur_go_user_service/storage/repo"
 	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 )
 
 type companyRepo struct {
@@ -199,4 +200,73 @@ func (r *companyRepo) UpdateAccountNumber(req *pb.Company) error {
 
 	_, err := r.db.Exec(query, req.AccountNumber, req.Id)
 	return err
+}
+
+func (r *companyRepo) CompanyReport(req *pb.CompanyReportReq) (*pb.CompanyReportResp, error) {
+	var (
+		filter    string
+		companies []*pb.CompanyReportResponse
+		args      = make(map[string]interface{})
+	)
+	args["ids"] = pq.Array(req.Companies)
+
+	filter += " ORDER BY c.created_at DESC "
+
+	query := `SELECT 
+					c.id,
+					c.name,
+					count(1) 
+				FROM researcher r JOIN company c ON c.id = r.company_id 
+                WHERE c.deleted_at = 0 AND c.id = ANY (:ids) GROUP BY (c.id,c.name) %s`
+	rows, err := r.db.NamedQuery(fmt.Sprintf(query, filter), args)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var company pb.CompanyReportResponse
+		err = rows.Scan(
+			&company.CompanyId,
+			&company.CompanyName,
+			&company.ResearchersCount,
+		)
+		if err != nil {
+			return nil, err
+		}
+		companies = append(companies, &company)
+	}
+
+	return &pb.CompanyReportResp{
+		Companies: companies,
+	}, nil
+}
+
+func (r *companyRepo) GetCompanyByAccountNumber(req *pb.CompanyAccountNumber) (*pb.Company, error) {
+	var company pb.Company
+	query := `SELECT 
+                    id,
+                    name,
+                    inn,
+                    owner_name,
+                    email,
+                    phone,
+					account_number
+                FROM company
+                WHERE deleted_at = 0 AND account_number = $1 `
+
+	row := r.db.QueryRow(query, req.AccountNumber)
+	err := row.Scan(
+		&company.Id,
+		&company.Name,
+		&company.Inn,
+		&company.OwnerName,
+		&company.Email,
+		&company.Phone,
+		&company.AccountNumber,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &company, nil
 }

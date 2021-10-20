@@ -158,3 +158,12 @@ func (s *respondentService) UpdateAccountNumber(ctx context.Context, req *pb.Cre
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *respondentService) GetByAccountNumber(ctx context.Context, req *pb.RespondentAccountNumber) (*pb.Respondent, error) {
+	respondent, err := s.storage.Respondent().GetByAccountNumber(req)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while getting respondent", req, codes.Internal)
+	}
+
+	return respondent, nil
+}

@@ -359,3 +359,48 @@ func (r *respondentRepo) UpdateAccountNumber(req *pb.CreateRespondent) error {
 	_, err := r.db.Exec(query, req.AccountNumber, req.Id)
 	return err
 }
+
+func (r *respondentRepo) GetByAccountNumber(req *pb.RespondentAccountNumber) (*pb.Respondent, error) {
+	var respondent pb.Respondent
+	var rating pb.Rating
+	query := `SELECT 
+                    id,
+                    name,
+                    email,
+                    phone,
+                    sber_id,
+					inn,
+                    company,
+                    position,
+                    description,
+                    photo,
+					account_number,
+					rating_communication,
+					rating_experience,
+					rating_punctuality
+                FROM respondent
+                WHERE deleted_at = 0 AND account_number = $1 `
+
+	row := r.db.QueryRow(query, req.AccountNumber)
+	err := row.Scan(
+		&respondent.Id,
+		&respondent.Name,
+		&respondent.Email,
+		&respondent.Phone,
+		&respondent.SberId,
+		&respondent.Inn,
+		&respondent.Company,
+		&respondent.Position,
+		&respondent.Description,
+		&respondent.Photo,
+		&respondent.AccountNumber,
+		&rating.Communication,
+		&rating.Experience,
+		&rating.Punctuality,
+	)
+	if err != nil {
+		return nil, err
+	}
+	respondent.Rating = &rating
+	return &respondent, nil
+}

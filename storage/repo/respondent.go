@@ -13,4 +13,5 @@ type RespondentRepoI interface {
 	UpdateRespondentInn(req *pb.UpdateRespondentInnRequest) error
 	GetRespondentsById(req *pb.GetRespondentsByIdRequest) (*pb.GetAllRespondentResponse, error)
 	UpdateAccountNumber(req *pb.CreateRespondent) error
+	GetByAccountNumber(req *pb.RespondentAccountNumber) (*pb.Respondent, error)
 }
