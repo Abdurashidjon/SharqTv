@@ -211,13 +211,14 @@ func (r *companyRepo) CompanyReport(req *pb.CompanyReportReq) (*pb.CompanyReport
 	args["ids"] = pq.Array(req.Companies)
 
 	filter += " ORDER BY c.created_at DESC "
-
+	fmt.Println(len(req.Companies))
+	fmt.Println(req.Companies)
 	query := `SELECT 
 					c.id,
 					c.name,
 					count(1) 
-				FROM researcher r JOIN company c ON c.id = r.company_id 
-                WHERE c.deleted_at = 0 AND c.id = ANY (:ids) GROUP BY (c.id,c.name) %s`
+				FROM researcher r LEFT JOIN company c ON c.id = r.company_id 
+                WHERE c.id = ANY (:ids) GROUP BY (c.id, c.name) %s`
 	rows, err := r.db.NamedQuery(fmt.Sprintf(query, filter), args)
 	if err != nil {
 		return nil, err
@@ -235,6 +236,9 @@ func (r *companyRepo) CompanyReport(req *pb.CompanyReportReq) (*pb.CompanyReport
 		}
 		companies = append(companies, &company)
 	}
+
+	fmt.Println(len(companies))
+	fmt.Println(companies)
 
 	return &pb.CompanyReportResp{
 		Companies: companies,
@@ -269,4 +273,20 @@ func (r *companyRepo) GetCompanyByAccountNumber(req *pb.CompanyAccountNumber) (*
 	}
 
 	return &company, nil
+}
+
+func (r *companyRepo) CheckAvailability(inn string) (int, error) {
+	var count int
+	query := `SELECT 
+				count(1)
+			FROM company 
+			WHERE inn = $1 `
+	row := r.db.QueryRow(query, inn)
+	err := row.Scan(
+		&count,
+	)
+	if err != nil {
+		return 0, err
+	}
+	return count, err
 }
