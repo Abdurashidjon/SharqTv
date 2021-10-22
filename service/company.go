@@ -41,6 +41,14 @@ func (s *companyService) Create(ctx context.Context, req *pb.Company) (*pb.Compa
 		return nil, helper.HandleError(s.logger, errors.New("Invalid email"), "Invalid email", req, codes.Canceled)
 	}
 
+	count, err := s.storage.Company().CheckAvailability(req.Inn)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while getting company by account number", req, codes.Internal)
+	}
+	if count != 0 {
+		return nil, helper.HandleError(s.logger, err, "inn already exist", req, codes.Canceled)
+	}
+
 	account_number, err := s.client.AccountService().Create(
 		context.Background(),
 		&pbb.CreateAccountReq{
@@ -141,4 +149,15 @@ func (s *companyService) GetCompanyByAccountNumber(ctx context.Context, req *pb.
 	}
 
 	return company, nil
+}
+
+func (s *companyService) CheckAvailabilityInn(ctx context.Context, req *pb.Inn) (*emptypb.Empty, error) {
+	count, err := s.storage.Company().CheckAvailability(req.Inn)
+	if err != nil {
+		return nil, helper.HandleError(s.logger, err, "error while getting company by account number", req, codes.Internal)
+	}
+	if count != 0 {
+		return nil, helper.HandleError(s.logger, err, "inn already exist", req, codes.Canceled)
+	}
+	return &emptypb.Empty{}, nil
 }

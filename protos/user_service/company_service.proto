@@ -15,6 +15,11 @@ service CompanyService {
     rpc UpdateAccountNumber(Company) returns (google.protobuf.Empty) {}
     rpc CompanyReport(CompanyReportReq) returns (CompanyReportResp) {}
     rpc GetCompanyByAccountNumber(CompanyAccountNumber) returns (Company) {}
+    rpc CheckAvailabilityInn(Inn) returns (google.protobuf.Empty) {}
+}
+
+message Inn {
+    string inn = 1;
 }
 
 message CompanyAccountNumber {
