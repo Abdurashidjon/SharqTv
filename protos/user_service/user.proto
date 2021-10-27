@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package genproto;
+option go_package="genproto/user_service";
+
+message Admin {
+    string id = 1;
+    string access_token = 2;
+    string name = 3;
+    string username = 4;
+    string password = 5;
+    string phone = 6;
+    bool   active = 7;
+    string created_at = 11;
+    string updated_at = 12;
+    repeated Permission permissions = 13;
+    
+}
+
+message Customer {
+    string id = 1;
+    string access_token = 2;
+    string name = 3;
+    string lastname = 4;
+    string password = 5;
+    string phone = 6;
+    bool   active = 7;
+    bool   phone_verified = 8;
+    string address = 9;
+    string gender = 10;
+    string date_of_birth = 11;
+    string avatar = 12;
+    string google_id = 13;
+    string facebook_id = 14;
+    string apple_id = 15;
+    string created_at = 16;
+    string updated_at = 17;
+    string deleted_at = 18;
+    string fcm_token = 19;
+    int32 platform = 20;
+}
+
+message UserActivity {
+    message User {
+        string id = 1;
+        string name = 2;
+        string username = 3;
+        string phone = 4;
+    }
+    string id = 1;
+    User user = 2;
+    string element = 3;
+    string element_id = 4;
+    string action = 5;
+    string from_value = 6;
+    string to_value = 7;
+    string time = 8;
+}
+
+message Permission {
+    string name = 1;
+    string key = 2;
+    string id = 3;
+}
+
+
+message GetRequest {
+    string id = 1;
+    string slug = 2;
+}
+
+message FindRequest {
+    int32  page = 1;
+    string  search = 2;
+    bool    active = 3;
+    bool    inactive = 4;
+    int32  limit = 5;
+}
+
+message DeleteRequest {
+    string id = 1;
+}
+
+message IdMessage {
+    string id = 1;
+}
+
+
+message Empty {
+}
+
+
+message Role {
+    string id = 1;
+    string title = 2;
+    bool control_movie_creators = 3;
+    bool control_category = 4;
+    bool control_favorite_movie = 5;
+    bool control_dashboard = 6;
+    bool control_tariff = 7;
+    bool control_permissions = 8;
+    bool control_movie = 9;
+    bool control_notification = 10;
+    bool control_admin = 11;
+    bool control_genre = 12;
+}

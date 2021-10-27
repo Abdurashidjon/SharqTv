@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package genproto;
+
+option go_package="genproto/user_service";
+import "user.proto";
+
+service RolesService {
+    rpc Create(Role) returns (IdMessage) {}
+}
+
+

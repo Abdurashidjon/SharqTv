@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"time"
 
-	"bitbucket.org/udevs/ur_go_user_service/pkg/logger"
+	"bitbucket.org/udevs/sharqtv_go_user_service/pkg/logger"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

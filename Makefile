@@ -30,7 +30,7 @@ proto-gen:
 	./scripts/gen-proto.sh	${CURRENT_DIR}
 
 clone-protos:
-	rm -rf protos/* && cp -R ur_protos/* protos
+	rm -rf protos/* && cp -R sharqtv_protos/* protos
 
 pull-proto-module:
 	git submodule update --init --recursive

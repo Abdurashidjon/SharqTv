@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"net"
 
-	"bitbucket.org/udevs/ur_go_user_service/config"
-	"bitbucket.org/udevs/ur_go_user_service/genproto/user_service"
-	"bitbucket.org/udevs/ur_go_user_service/pkg/logger"
-	"bitbucket.org/udevs/ur_go_user_service/service"
-	grpc_client "bitbucket.org/udevs/ur_go_user_service/service/grpc_clients"
+	"bitbucket.org/udevs/sharqtv_go_user_service/config"
+	"bitbucket.org/udevs/sharqtv_go_user_service/genproto/user_service"
+	"bitbucket.org/udevs/sharqtv_go_user_service/pkg/logger"
+	"bitbucket.org/udevs/sharqtv_go_user_service/service"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
@@ -18,7 +17,7 @@ import (
 func main() {
 	cfg := config.Load()
 
-	log := logger.New(cfg.Environment, "ur_go_user_service")
+	log := logger.New(cfg.Environment, "sharqtv_go_user_service")
 	defer logger.Cleanup(log)
 
 	conStr := fmt.Sprintf("host=%s port=%v user=%s password=%s dbname=%s sslmode=%s",
@@ -35,11 +34,6 @@ func main() {
 		log.Error("error while connecting database", logger.Error(err))
 		return
 	}
-	client, err := grpc_client.NewGrpcClients(&cfg)
-	if err != nil {
-		log.Error("error while connecting to clients", logger.Error(err))
-		return
-	}
 
 	lis, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {
@@ -47,16 +41,12 @@ func main() {
 		return
 	}
 
-	companyService := service.NewCompanyService(db, log, client)
-	respondentService := service.NewRespondentService(db, log, client)
-	researcherService := service.NewResearcherService(db, log)
+	rolesService := service.NewRoleService(db, log)
 
 	s := grpc.NewServer()
 	reflection.Register(s)
 
-	user_service.RegisterCompanyServiceServer(s, companyService)
-	user_service.RegisterRespondentServiceServer(s, respondentService)
-	user_service.RegisterResearcherServiceServer(s, researcherService)
+	user_service.RegisterRolesServiceServer(s, rolesService)
 
 	log.Info("main: server running",
 		logger.String("port", cfg.RPCPort))
