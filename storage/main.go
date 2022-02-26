@@ -25,3 +25,4 @@ func NewStoragePg(db *sqlx.DB) StorageI {
 func (s *storagePg) Roles() repo.RoleRepoI {
 	return s.roleRepo
 }
+

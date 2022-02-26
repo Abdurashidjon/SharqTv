@@ -63,25 +63,7 @@ message Permission {
     string id = 3;
 }
 
-
-message GetRequest {
-    string id = 1;
-    string slug = 2;
-}
-
-message FindRequest {
-    int32  page = 1;
-    string  search = 2;
-    bool    active = 3;
-    bool    inactive = 4;
-    int32  limit = 5;
-}
-
 message DeleteRequest {
-    string id = 1;
-}
-
-message IdMessage {
     string id = 1;
 }
 
@@ -89,7 +71,20 @@ message IdMessage {
 message Empty {
 }
 
+message ListRequest {
+	string search = 1;
+	int32 limit = 2;
+	int32 page = 3;
+}
 
+
+
+
+
+//  This is for CreateRole message
+message IdMessage {
+    string id = 1;
+}
 message Role {
     string id = 1;
     string title = 2;
@@ -103,4 +98,71 @@ message Role {
     bool control_notification = 10;
     bool control_admin = 11;
     bool control_genre = 12;
+}
+
+
+
+
+// // This is for GetAll code
+message RoleListRequestId{
+     string id = 1;
+}
+
+
+
+// This is for GetId code 
+message GetRequest {
+    string id = 1;
+}
+message GetResponse {
+    string id = 1;
+    string title = 2;
+    bool control_movie_creators = 3;
+    bool control_category = 4;
+    bool control_favorite_movie = 5;
+    bool control_dashboard = 6;
+    bool control_tariff = 7;
+    bool control_permissions = 8;
+    bool control_movie = 9;
+    bool control_notification = 10;
+    bool control_admin = 11;
+    bool control_genre = 12; 
+}
+
+
+
+// This is for Update code 
+message UpdateList {
+    string id = 1;
+    string title = 2;
+    bool control_movie_creators = 3;
+    bool control_category = 4;
+    bool control_favorite_movie = 5;
+    bool control_dashboard = 6;
+    bool control_tariff = 7;
+    bool control_permissions = 8;
+    bool control_movie = 9;
+    bool control_notification = 10;
+    bool control_admin = 11;
+    bool control_genre = 12;
+}
+
+message UpdateResponse {
+    string id = 1;
+    string title = 2;
+    bool control_movie_creators = 3;
+    bool control_category = 4;
+    bool control_favorite_movie = 5;
+    bool control_dashboard = 6;
+    bool control_tariff = 7;
+    bool control_permissions = 8;
+    bool control_movie = 9;
+    bool control_notification = 10;
+    bool control_admin = 11;
+    bool control_genre = 12;
+}
+
+// DeleteRoleId
+message SuccessResponse {
+    string id = 1;
 }

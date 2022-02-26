@@ -7,6 +7,7 @@ import "user.proto";
 
 service RolesService {
     rpc Create(Role) returns (IdMessage) {}
+    rpc RoleGetID(GetRequest) returns (GetResponse) {}
+    rpc UpdateRole(UpdateList) returns (UpdateResponse) {}
+    rpc DeleteRoleId(GetRequest) returns (Empty) {}
 }
-
-

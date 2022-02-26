@@ -14,7 +14,7 @@ type Config struct {
 
 	PostgresHost     string
 	PostgresPort     int
-	PostgresPassword string
+	PostgresPassword string   
 	PostgresUser     string
 	PostgresDB       string
 	LogLevel         string
@@ -36,15 +36,15 @@ func Load() Config {
 
 	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "localhost"))
 	c.PostgresPort = cast.ToInt(getOrReturnDefault("POSTGRES_PORT", 5432))
-	c.PostgresDB = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "user_service"))
+	c.PostgresDB = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "sharq_user_service"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
-	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "123456"))
+	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "postgres12"))
 
 	c.BillingServiceHost = cast.ToString(getOrReturnDefault("BILLING_SERVICE_HOST", "localhost"))
 	c.BillingServicePort = cast.ToInt(getOrReturnDefault("BILLING_SERVICE_PORT", 5004))
 
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
-	c.RPCPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":5002"))
+	c.RPCPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":8003"))
 
 	c.PasscodePool = cast.ToString(getOrReturnDefault("PASSCODE_POOL", "0123456789"))
 	c.PasscodeLength = cast.ToInt(getOrReturnDefault("PASSCODE_LENGTH", "6"))
